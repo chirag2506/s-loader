@@ -4,7 +4,7 @@
     <title>Upload</title>
 </head>
 <body>
-    <form method = "POST" action="/duplicate" enctype="multipart/form-data">
+    <form method = "POST" action="/duplicate/" enctype="multipart/form-data">
         {% csrf_token %}
 
         <input type = "file" name = "myFile">

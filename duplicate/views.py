@@ -22,7 +22,7 @@ def home(request):
         data = json.loads(json_records)
         context = {"something": True, "num_duplicates": num_duplicates, "duplicates_df": data}
 
-        wb_without_duplicates = wb.drop_duplicates() #new dataframe
+        wb_without_duplicates = wb.drop_duplicates() #new dataframe without duplicates
         
         return render(request, "index.html", context)
         
@@ -31,8 +31,6 @@ def home(request):
         # return HttpResponse("FILE UPLOADED")
     else:
         return render(request, "index.html")
-
-    return render(request, "index.html", context)
 
 def upload(request):
     return render(request, "upload.html")
