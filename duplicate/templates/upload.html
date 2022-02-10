@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload</title>
+</head>
+<body>
+    <form method = "POST" action="/duplicate" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type = "file" name = "myFile">
+        <br>
+        <input type = "submit">
+    </form>
+
+    
+    <!--    <table class="table table-dark table-striped">
+            <tr> 
+                {% for value in DataFrame %} 
+                    <th>{{ value }}</th>
+                {% endfor %} 
+    
+                {% for _,row in DataFrame.iterrows %} 
+                    <tr> 
+                        {% for value in row %} 
+                            <td>{{ value }}</td> 
+                        {% endfor %} 
+                    </tr> 
+                {% endfor %} 
+            </tr> 
+        <!--<thead>
+          <tr>
+            <th>R&D Spend</th>
+            <th>Administration</th>
+            <th>Marketing Spend</th>
+            <th>State</th>
+            <th>Profit</th>
+          </tr>
+        </thead>
+        <tbody>
+        <!-- jinja2 Technique 
+        {% if duplicates_df %}  
+        {% for i in duplicates_df %}
+          <tr>
+            <td>{{i.RD_Spend}}</td>
+            <td>{{i.Administration}}</td>
+            <td>{{i.Marketing_Spend}}</td>
+            <td>{{i.State}}</td>
+            <td>{{i.Profit}}</td>
+          </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    
+      </table>
+    -->
+      
+
+</body>
+</html>
