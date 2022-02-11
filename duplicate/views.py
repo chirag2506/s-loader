@@ -12,6 +12,10 @@ def home(request):
     if request.method == "POST":
         excel_file = request.FILES["myFile"]
         wb = pd.read_excel(excel_file.read())
+
+        json_wb = wb.to_json()
+        request.session['wb'] = json_wb #saving workbook in session
+
         # print(wb)
         duplicates = wb[wb.duplicated()]  #dataframe for showing duplicate entries
         num_duplicates = duplicates.shape[0]
@@ -37,3 +41,28 @@ def home(request):
 
 def upload(request):
     return render(request, "upload.html")
+
+def group(request):
+    df = request.session.get('wb', None)
+    df = pd.read_json(df)
+
+    if 'delete_dup' in request.POST:
+        wb_without_duplicates = df.drop_duplicates()
+        columns_head = wb_without_duplicates.columns
+        rows = wb_without_duplicates.values[:,:]
+
+        context_next = {"something": True, "df_columns": columns_head,"df_rows": rows}
+
+        return render(request, "grouping.html", context_next)
+
+    elif 'keep_dup' in request.POST:
+        columns_head = df.columns
+        rows = df.values[:,:]
+
+        context_next = {"something": True, "df_columns": columns_head,"df_rows": rows}
+
+        return render(request, "grouping.html", context_next)
+
+    else:
+        return render(request, "grouping.html")
+    

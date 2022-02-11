@@ -2,15 +2,15 @@
 <html>
 
 <head>
-    <title>Duplicates</title>
+    <title>GROUPING</title>
 </head>
 
 <body>
 
     {% if something %}
-    <p>Hello,</p>
+    
+    <p>THIS IS GROUPING(next) PAGE</p>
 
-    <p>Number of duplicate entries: {{num_duplicates}}</p>
     <div>
         <table border="1">
             <thead>
@@ -24,7 +24,7 @@
             </thead>
 
             <tbody>
-                {% for value in duplicates_df %}
+                {% for value in df_rows %}
                 <tr>
                     {% for cell in value %}
 
@@ -35,22 +35,11 @@
             </tbody>
         </table>
     </div>
-    <br>
-    <p>Would you like to delete these duplicate records or proceed as is?</p>
-    <br>
-
-    <form action="/duplicate/grouping/" method="post">
-        {% csrf_token %}
-
-        <button type="submit" name="delete_dup">DELETE DUPLICATE RECORDS</button>
-        <button type="submit" name="keep_dup">KEEP DUPLICATE RECORDS</button>
-    </form>
 
     {% else %}
     <a href="/duplicate/upload">Please upload a file</a>
 
     {% endif %}
-
 </body>
 
 </html>
