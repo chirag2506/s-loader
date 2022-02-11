@@ -16,11 +16,14 @@ def home(request):
         duplicates = wb[wb.duplicated()]  #dataframe for showing duplicate entries
         num_duplicates = duplicates.shape[0]
 
+        columns_head = duplicates.columns
+        rows = duplicates.values[:,:]
+
         # parsing the DataFrame in json format.
-        json_records = duplicates.reset_index().to_json(orient ='records')
-        data = []
-        data = json.loads(json_records)
-        context = {"something": True, "num_duplicates": num_duplicates, "duplicates_df": data}
+        # json_records = duplicates.reset_index().to_json(orient ='records')
+        # data = []
+        # data = json.loads(json_records)
+        context = {"something": True, "num_duplicates": num_duplicates, "df_columns": columns_head,"duplicates_df": rows}
 
         wb_without_duplicates = wb.drop_duplicates() #new dataframe without duplicates
         
