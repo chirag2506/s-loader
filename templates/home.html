@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="homestyle.css">
+    <link rel="stylesheet" href="{%static 'homestyle.css' %}">
     <title>Home Page</title>
 </head>
 <body>
     <header>
-        <img class="navlogo" src="navlogo1.jpg" alt="sidelogo">
+        <img class="navlogo" src="{% static 'navlogo1.jpg' %}" alt="sidelogo">
         <nav>
             <ul class="navlinks">
                 <li><a href="#">Home</a></li>
@@ -26,7 +27,7 @@
         <div class="container">
             <div class="card">
                 <div class="imgbx">
-                    <img class="upload" src="uploading.jpg" alt="Uploading files">
+                    <img class="upload" src="{% static 'uploading.jpg' %}" alt="Uploading files">
                 </div>
                 <div class="content">
                     <h2>UPLOAD FILES</h2>
@@ -36,7 +37,7 @@
             </div>
             <div class="card">
             <div class="imgbx">
-                <img class="import" src="importing.png" alt="Importing files">
+                <img class="import" src="{% static 'importing.png' %}" alt="Importing files">
             </div>
             <div class="content">
                 <h2>IMPORT FILES</h2>
@@ -45,7 +46,7 @@
             </div>
             <div class="card">
             <div class="imgbx">
-                <img class="group" src="grouping.jpg" alt="Grouping files">
+                <img class="group" src="{% static 'grouping.jpg' %}" alt="Grouping files">
             </div>
             <div class="content">
                 <h2>GROUP DATA</h2>
@@ -54,7 +55,7 @@
             </div>
             <div class="card">
                 <div class="imgbx">
-                    <img class="" src="duplicate.jpg" alt="find and remove duplicates">
+                    <img class="" src="{% static 'duplicate.jpg' %}" alt="find and remove duplicates">
                 </div>
                 <div class="content">
                     <h2>FIND DUPLICATES</h2>
@@ -63,7 +64,7 @@
                 </div>
                 <div class="card">
                     <div class="imgbx">
-                        <img class="" src="chart monitor.jpg" alt="visualize the data">
+                        <img class="" src="{% static 'chart_monitor.jpg' %}" alt="visualize the data">
                     </div>
                     <div class="content">
                         <h2>GROUP DATA</h2>
