@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+  <meta name="author" content="GeeksLabs">
+  <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+  <!-- font awesome mera -->
+  <script src="https://kit.fontawesome.com/18747444ae.js" crossorigin="anonymous"></script>
+
+  <title>S-Loader</title>
+  <style type='text/css'>
+    section{
+      background: rgb(224,224,224)
+    }
+  </style>
+  <!-- Bootstrap CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- bootstrap theme -->
+  <link href="{% static 'css/bootstrap-theme.css' %}" rel="stylesheet">
+  <!--external css-->
+  <!-- font icon -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style-responsive.css' %}" rel="stylesheet" />
+  <link href="{% static 'css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
+
+  <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+      $(document).ready(function(){
+        var ctx = document.getElementById('monthChart').getContext('2d');
+        var monthChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels:  [{% for item in monthly %}'{{ item.month }}',{% endfor %}],
+                            // labels:  ['red', 'blue'],
+
+                            datasets: [{
+                                label: 'Uploads per Month',
+                                // data: [10, 20],
+                                data: [{% for item in monthly %}{{ item.AmtM }},{% endfor %}],
+
+
+                                backgroundColor: [
+                                    {% for item in monthly %}
+                                    'rgba(255, 99, 132, 0.7)',
+                                    'rgba(54, 162, 235, 0.7)',
+                                    'rgba(255, 206, 86, 0.7)',
+                                    'rgba(75, 192, 192, 0.7)',
+                                    'rgba(153, 102, 255, 0.7)',
+                                    'rgba(255, 159, 64, 0.7)',
+                                    {% endfor %}
+                                ],
+                                borderColor: [
+                                    {% for item in monthly %}
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    {% endfor %}
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                });
+        var ctx1 = document.getElementById('weekChart').getContext('2d');
+        var weekChart = new Chart(ctx1, {
+                                type: 'bar',
+                                data: {
+                                    labels:  [{% for item in weekly %}'{{ item.week }}',{% endfor %}],
+                                    // labels:  ['red', 'blue'],
+
+                                    datasets: [{
+                                        label: 'Uploads per Week',
+                                        // data: [10, 20],
+                                        data: [{% for item in weekly %}{{ item.AmtW }},{% endfor %}],
+
+
+                                        backgroundColor: [
+                                            {% for item in weekly %}
+                                            'rgba(255, 99, 132, 0.7)',
+                                            'rgba(54, 162, 235, 0.7)',
+                                            'rgba(255, 206, 86, 0.7)',
+                                            'rgba(75, 192, 192, 0.7)',
+                                            'rgba(153, 102, 255, 0.7)',
+                                            'rgba(255, 159, 64, 0.7)',
+                                            {% endfor %}
+                                        ],
+                                        borderColor: [
+                                            {% for item in weekly %}
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)',
+                                            {% endfor %}
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                                    }
+                                                }]
+                                            }
+                                        }
+                        });
+                var ctx2 = document.getElementById('yearChart').getContext('2d');
+                var yearChart = new Chart(ctx2, {
+                                        type: 'line',
+                                        data: {
+                                            labels:  [{% for item in yearly %}'{{ item.year }}',{% endfor %}],
+
+                                            datasets: [{
+                                                label: 'Uploads per Year',
+                                                data: [{% for item in yearly %}{{ item.AmtY }},{% endfor %}],
+
+                                                borderColor: [
+                                                    {% for item in yearly %}
+                                                    'rgba(255, 99, 132, 1)',
+                                                    'rgba(54, 162, 235, 1)',
+                                                    'rgba(255, 206, 86, 1)',
+                                                    'rgba(75, 192, 192, 1)',
+                                                    'rgba(153, 102, 255, 1)',
+                                                    'rgba(255, 159, 64, 1)',
+                                                    {% endfor %}
+                                                ],
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                            }
+                                                        }]
+                                                    }
+                                                }
+                                });
+
+
+});
+
+    </script>
+  <!-- container section start -->
+  <section id="container" class="">
+    <header class="header dark-bg">
+      <!--logo start-->
+      <a href="{% url 'dashboard' %}" class="logo">MY<span class="lite">DASHBOARD</span></a>
+      <!--logo end-->
+
+      <div class="top-nav notification-row">
+        <!-- notificatoin dropdown start-->
+        <ul class="nav pull-right top-menu">
+
+        </ul>
+        <!-- notificatoin dropdown end-->
+      </div>
+    </header>
+    <!--header end-->
+
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <!--overview start-->
+        
+
+        <div class="row">
+
+          <!--/.col-->
+
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="info-box brown-bg">
+              <i class="fas fa-chart-line"></i>
+              <div class="count">{{ snapWeek }}</div><br>
+              <div class="title">This Week</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="info-box dark-bg">
+              <i class="far fa-chart-bar"></i>
+              <div class="count">{{ snapMonth }}</div><br>
+              <div class="title">This Month</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="info-box green-bg">
+              <i class="fas fa-chart-area"></i>
+              <div class="count">{{ snapYear }}</div><br>
+              <div class="title">This Year</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+        </div>
+
+        <div class="row">
+          <div class="col-lg-9 col-md-12">
+
+              <div class="panel-heading">
+                <h4><i class="fas fa-wallet"></i></i><strong> Monthly Uploads</strong></h4>
+              </div>
+                <br>
+                <canvas id="monthChart" width='800'height="400"></canvas>
+              </div>
+
+
+
+
+          <div class="col-md-3">
+            <!-- List starts -->
+            <ul class="today-datas">
+              <canvas id="weekChart" width='300'height="190"></canvas>
+              <br><br>
+              <canvas id="yearChart" width='300'height="190"></canvas>
+
+            </ul>
+          </div>
+
+
+        </div>
+
+      </section>
+    </section>
+    <div style="position: relative; bottom: 5px; margin-left: 20px; background: rgb(224,224,224)">
+      All Rights Reserved.
+    </div>
+
+  </section>
+
+</body>
+
+</html>

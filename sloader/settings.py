@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'duplicate',
     'home',
-    'grouping'
+    'grouping',
+    'charts',
 ]
 
 MIDDLEWARE = [
