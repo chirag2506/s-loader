@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'duplicate',
-    'home'
+    'home',
+    'grouping'
 ]
 
 MIDDLEWARE = [
@@ -83,8 +84,12 @@ WSGI_APPLICATION = 'sloader.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bldot2uujx3isi3clafh',
+        'USER':'uaf9zenjb3zwdszd',
+        'PASSWORD':'MOTaVWWxUIT6MOPCXNU0',
+        'HOST':'bldot2uujx3isi3clafh-mysql.services.clever-cloud.com',
+        'POST':'3306'
     }
 }
 

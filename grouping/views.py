@@ -47,26 +47,34 @@ def column_pro(request):
             fields.append(request.POST.getlist(i))
         fields=fields[1:-1]
         path = os.walk(os.path.join(BASE_DIR,'grouping\static'))
+        print(path)
         files_path=[]
         file_name=[]
         for root, directories, files in path:
+            print("files********: ", files)
             for file in files:
                 file_name.append(file)
+                print("BASE dir: ", BASE_DIR)
                 files_path.append(os.path.join(os.path.join(BASE_DIR,'grouping\static'),file))
         engine = create_engine('mysql://uaf9zenjb3zwdszd:MOTaVWWxUIT6MOPCXNU0@bldot2uujx3isi3clafh-mysql.services.clever-cloud.com:3306/bldot2uujx3isi3clafh')
         x=0
+        print("file path: ", files_path)
+        print('fields:', fields)
         for i,j in zip(files_path,fields):
-            df=pd.read_csv(i)
+            print("inside ----------")
+            df=pd.read_excel(i)
+            print(df)
             df = df[j]
             t=engine.table_names()
             if file_name[x] not in t:
                 df.to_sql(file_name[x], con=engine)
+                print("stored to mysql-----------------------")
             else:
                 c=file_name[x]+str(random.randint(0,9))
                 while c in t:
                     c+=str(random.randint(0,9))
                 df.to_sql(c, con=engine)
-            os.remove(i)
+            # os.remove(i)
             x+=1
             
         return render(request, "multiple.html")

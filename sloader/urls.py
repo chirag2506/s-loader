@@ -19,5 +19,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("home.urls")),
-    path('duplicate/', include("duplicate.urls"))
+    path('duplicate/', include("duplicate.urls")),
+    path('grouping/', include(("grouping.urls", 'grouping'), namespace="grouping"))
 ]

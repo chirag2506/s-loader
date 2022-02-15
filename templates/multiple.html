@@ -2,7 +2,7 @@
 {% block content %}
 <div class="multiple_files">
 	<fieldset name="Multiple Files Upload">
-		<form method="post" action="/select_columns" enctype="multipart/form-data" class="form_style">
+		<form method="post" action="{% url 'grouping:select_columns' %}" enctype="multipart/form-data" class="form_style">
 			{% csrf_token %}
 			<div >
 				<label class="fileupl">Upload your file here

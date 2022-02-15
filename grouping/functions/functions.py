@@ -9,6 +9,6 @@ def handle_uploaded_file(f):
 
 
 def get_fields(f):
-   df=pd.read_csv(f.name)
+   df=pd.read_excel(f.name)
    #print(list(df.columns))
    return list(df.columns)

@@ -31,11 +31,13 @@
                 </div>
                 <div class="content">
                     <h2>UPLOAD FILES</h2>
-                    <a class="drophere" href="#"><button>Drop your files here</button></a>
-
+                    <form action="upload" method="POST">
+                        {% csrf_token %}
+                        <a class="drophere" href="#"><button>Drop your files here</button></a>
+                    </form>
                 </div>
             </div>
-            <div class="card">
+            <!-- <div class="card">
             <div class="imgbx">
                 <img class="import" src="{% static 'importing.png' %}" alt="Importing files">
             </div>
@@ -71,7 +73,7 @@
                         <a class="drophere" href="#"><button>Drop your files here</button></a>
                     </div>
                     </div>
-             </div>
+             </div> -->
     </div>
             <footer>
                 <div class="info">
