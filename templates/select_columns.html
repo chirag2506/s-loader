@@ -1,0 +1,65 @@
+{% extends 'base.html'%}
+{% block content %}
+{% csrf_token %}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h2 style="color:#fff;border:1px solid white;padding:10px;margin:15px;">Select columns you want to insert</h2>
+    </div>
+</div>
+<div class="row selcol_des">
+    <div class="col-md-6 col-md-offset-3">
+        <form id="msform" action="/column_process" method="post">
+                <ul id="progressbar">
+                    {% csrf_token %}
+                    {%for k in context%}
+                        {% if forloop.first %}
+                            <li class="active">{{k}}</li>
+                        {% elif not forloop.first %} 
+                            <li>{{k}}</li>
+                        {%endif%}
+                    {%endfor%}
+                </ul>
+            {% csrf_token %}
+                {% for i,j in context.items %}
+                    <fieldset>
+                    
+                    <h2 class="fs-title">{{i}}</h3>
+                    {% for k in j %}
+                    <div class="fieldcol">
+                        <input type="checkbox" name="{{ i }}[]" id="{{ forloop.counter}}" value="{{k}}" style="position: relative;" Checked/>
+                        <label for="{{ forloop.counter }}">{{k}}</label><br>
+                    </div>
+                    {% endfor %}
+                    {% if not forloop.first%}
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                    {%endif%} 
+                    {% if not forloop.last%}
+                        <input type="button" name="next" class="next action-button" value="Next"/>
+                    {%endif%} 
+                    {% if forloop.last%}
+                        <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+                    {%endif%} 
+                    
+                    </fieldset>
+                {% endfor %}
+        
+               
+        </form>
+    </div>
+</div>
+<div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                 {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'success' %}
+                                <div class="alert alert-success">{{ message }}</div>
+                            {% elif message.tags == 'error' %}
+                                <div class="alert alert-danger">{{ message }}</div>
+                            {% endif %}
+                        {% endfor %}
+                 {% endif %}
+            </div>
+        </div>
+</div>
+{% endblock %}

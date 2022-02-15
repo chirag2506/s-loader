@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="multiple_files">
+	<fieldset name="Multiple Files Upload">
+		<form method="post" action="/select_columns" enctype="multipart/form-data" class="form_style">
+			{% csrf_token %}
+			<div >
+				<label class="fileupl">Upload your file here
+				<input class="file_but" type="file" name="files" multiple>
+				</label>&nbsp;&nbsp;
+			</div>
+			<input type="submit" value="Upload" >
+		</form>
+	</fieldset>
+</div>
+{% endblock %}
