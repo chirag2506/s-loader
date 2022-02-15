@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="{% url 'fileapp:uploads' %}" method="POST" enctype="multipart/form-data">
-        <input type="text" name="filename" placeholder="Enter your file name">
-        <input type="file" multiple name="uploadfiles">
-        {% csrf_token %}
-        <button type="submit">File Upload</button>
-    </form>
-</body>
+<html>
+    <head>
+        <title>
+            Excel file upload and processing : Django Example : ThePythonDjango.Com
+        </title>
+    </head>
+    <body style="margin-top: 30px;margin-left: 30px;">
+        <form action="{% url "fileapp:index" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" title="Upload excel file"name="excel_file" multiple name="excel_file">
+            
+            
+            <input type="submit" value="Upload" style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
+        </form>
+
+    </body>
 </html>
