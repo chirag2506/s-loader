@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Duplicates</title>
+</head>
+
+<body>
+
+    {% if something %}
+    <p>Hello,</p>
+
+    <p>Number of duplicate entries: {{num_duplicates}}</p>
+    <div>
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for value in df_columns %}
+                    <th>
+                        {{ value }}
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for value in duplicates_df %}
+                <tr>
+                    {% for cell in value %}
+
+                    <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <p>Would you like to delete these duplicate records or proceed as is?</p>
+    <br>
+
+    <form action="/duplicate/grouping/" method="post">
+        {% csrf_token %}
+
+        <button type="submit" name="delete_dup">DELETE DUPLICATE RECORDS</button>
+        <button type="submit" name="keep_dup">KEEP DUPLICATE RECORDS</button>
+    </form>
+
+    {% else %}
+    <a href="/duplicate/upload">Please upload a file</a>
+
+    {% endif %}
+
+</body>
+
+</html>

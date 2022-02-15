@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GROUPING</title>
+</head>
+
+<body>
+
+    {% if something %}
+    
+    <p>THIS IS GROUPING(next) PAGE</p>
+
+    <div>
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for value in df_columns %}
+                    <th>
+                        {{ value }}
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for value in df_rows %}
+                <tr>
+                    {% for cell in value %}
+
+                    <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+    <a href="/duplicate/upload">Please upload a file</a>
+
+    {% endif %}
+</body>
+
+</html>
