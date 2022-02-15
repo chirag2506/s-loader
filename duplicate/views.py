@@ -6,10 +6,16 @@ import pandas as pd
 import pip
 # pip.main(["install", "openpyxl"])
 import json
+from .forms import uploadform
+
 
 # Create your views here.
 def home(request):
     if request.method == "POST":
+
+        # user=uploadform(request.POST,request.FILES)
+        # files = request.FILES.getlist('files')
+
         excel_file = request.FILES["myFile"]
         wb = pd.read_excel(excel_file.read())
 

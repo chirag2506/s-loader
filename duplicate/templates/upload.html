@@ -7,7 +7,7 @@
     <form method = "POST" action="/duplicate/" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <input type = "file" name = "myFile">
+        <input type = "file" name = "myFile" multiple>
         <br>
         <input type = "submit">
     </form>
