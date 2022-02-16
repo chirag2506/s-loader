@@ -27,23 +27,21 @@
             </ul>
         </nav>
     </header>
+    {% include 'messages.html' %}
     <div class="wrapper">
-                <div class="content">
-                    <form action="upload" method="POST">
-                        {% csrf_token %}
-                         <div class="drag-area">
+        <div class="content">
+            <form action="upload" method="POST">
+                {% csrf_token %}
+                <div class="drag-area">
                     <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                     <input type="file" hidden>
                     <a class="drophere" href="#"><button>Drop your files here</button></a>
                 </div>
-                    </form>
-                </div>
-            </div>
+            </form>
+        </div>
+    </div>
 
-
-
-
-            <!-- <div class="card">
+    <!-- <div class="card">
             <div class="imgbx">
                 <img class="import" src="{% static 'importing.png' %}" alt="Importing files">
             </div>
@@ -80,53 +78,53 @@
                     </div>
                     </div>
              </div> -->
-        </div>
-        <footer>
-            <div class="info">
-                <div class="fw about">
-                    <h2>ABOUT US</h2>
-                    <p>The objective of this project is to build a web app with node/ExpressJS
-                        and MySQL database. These apps will be useful for your Database or Data
-                        warehouse concerns. This app can support uploading your existing excel
-                        file with format .xlsx or .xls into database MySQL. It can use upload
-                        multiple files, but we will limit 5 files for server optimization reason</p>
-                    <div class="socialmedia">
-                        <ul>
-                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkdin-f"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="fw link">
-                    <h2>QUICK LINKS</h2>
+    </div>
+    <footer>
+        <div class="info">
+            <div class="fw about">
+                <h2>ABOUT US</h2>
+                <p>The objective of this project is to build a web app with node/ExpressJS
+                    and MySQL database. These apps will be useful for your Database or Data
+                    warehouse concerns. This app can support uploading your existing excel
+                    file with format .xlsx or .xls into database MySQL. It can use upload
+                    multiple files, but we will limit 5 files for server optimization reason</p>
+                <div class="socialmedia">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="fw contact">
-                    <h2>CONTACT US</h2>
-                    <ul>
-                        <li>
-                            <span><i class="fab fa-mapmarker-alt"></i></span>
-                            <p>Searce pune office, Maharastra</p>
-                        </li>
-                        <li>
-                            <span><i class="fab fa-envolpe"></i></span>
-                            <a href="#">harryarmando81@gmail.com</a>
-                        </li>
-                        <li>
-                            <span><i class="fab fa-phone-volume"></i></span>
-                            <a href="#">98721 89500</a>
-                        </li>
-
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkdin-f"></i></a></li>
                     </ul>
                 </div>
             </div>
-        </footer>
+            <div class="fw link">
+                <h2>QUICK LINKS</h2>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="fw contact">
+                <h2>CONTACT US</h2>
+                <ul>
+                    <li>
+                        <span><i class="fab fa-mapmarker-alt"></i></span>
+                        <p>Searce pune office, Maharastra</p>
+                    </li>
+                    <li>
+                        <span><i class="fab fa-envolpe"></i></span>
+                        <a href="#">harryarmando81@gmail.com</a>
+                    </li>
+                    <li>
+                        <span><i class="fab fa-phone-volume"></i></span>
+                        <a href="#">98721 89500</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </footer>
 
 
 </body>

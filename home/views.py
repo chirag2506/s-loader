@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from .models import User
+from django.contrib import messages
+from sloader.constants import msg_d
 
 # Create your views here.
 
@@ -15,43 +18,34 @@ def signup(request):
     registered = False
     if request.method == 'POST':  
         username = request.POST.get('Username')
+        email = request.POST.get('Email')
         password = request.POST.get('Password')
-        print(username, password)
-        return render(request, "home.html")
-        #     user = form.save()
-        #     user.set_password(user.password)
-        #     user.save()
-        #     registered = True
-        #     login(request, user)
-        #     template = loader.get_template("login.html")
-        #     return HttpResponse(template.render())
-        # else:
-        #     for msg in form.error_messages:
-        #         print(form.error_messages[msg])
-        #     return render(request=request,
-        #                   template_name="signup.html",
-        #                   context={"form": form})
+        conf_password = request.POST.get('ConfPassword')
+        if(password == conf_password):
+            user = User(name= username, email = email, password = password)
+            user.save()
+            print("success register")
+            messages.success(request, msg_d['signup_success'])
+            return render(request, "home.html")
+        else:
+            print("not register")
+            messages.error(request, msg_d['not_match_password'])
+            return render(request, "login.html")
 
 def login_view(request):
-    # if request.method == 'POST':
-    #     username = request.POST.get('username')
-    #     password = request.POST.get('password')
-    #     user = authenticate(username=username, password=password)
-    #     if user:
-    #         if user.is_active:
-    #             login(request,user)
-    #             template = loader.get_template("index.html")
-    #             return HttpResponse(template.render())
-    #         else:
-    #             return HttpResponse("Your account was inactive.")
-    #     else:
-    #         print("Someone tried to login and failed.")
-    #         print("They used username: {} and password: {}".format(username,password))
-    #         return HttpResponse("Invalid login details given")
-    # else:
-    #     return HttpResponseRedirect() #add error page link
     if request.method=='POST':  
         username = request.POST.get('Username')
         password = request.POST.get('Password')
         print(username, password)
-        return render(request, "home.html")
+        if not username:
+            raise ValueError('Please enter user name')
+        data = User.objects.raw('select * from home_user where email = %s and password = %s', [username, password])
+        if(data):
+            print(data)
+            print("Login successfull")
+            messages.success(request, msg_d["login_success"])
+            return render(request, "home.html")
+        else:
+            print("Enter valide data")
+            messages.error(request, msg_d['invalid_data'])
+            return render(request, "login.html")

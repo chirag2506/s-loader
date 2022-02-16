@@ -12,6 +12,9 @@
     <title>Sign in & Sign up Form</title>
   </head>
   <body>
+    <div>
+      {% include 'messages.html' %}
+    </div>
     <div class="container">
       <img src="{% static 'images.jpg' %}" alt="dashboard" style="width:100%" height="100%" >
       <div class="forms-container">
@@ -21,7 +24,7 @@
             <h2 class="title">Sign in</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" name="Username" value="" placeholder="Username" />
+              <input type="text" name="Username" value="" placeholder="Email id" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
@@ -29,7 +32,7 @@
             </div>
             <input type="submit" value="Login" class="btn solid" />
             <p class="social-text">Or Sign in with social platforms</p>
-            <div class="social-media">
+            <!-- <div class="social-media">
               <a href="#" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
               </a>
@@ -42,30 +45,30 @@
               <a href="#" class="social-icon">
                 <i class="fab fa-linkedin-in"></i>
               </a>
-            </div>
+            </div> -->
           </form>
           <form action="signup" class="sign-up-form" method="post">
             {% csrf_token %}
             <h2 class="title">Sign up</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input type="text" placeholder="Username" name="Username" value=""/>
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" />
+              <input type="email" placeholder="Email" name="Email" value=""/>
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input type="password" placeholder="Password" name="Password" value=""/>
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Confirm Password" />
+              <input type="password" placeholder="Confirm Password" name="ConfPassword" value=""/>
             </div>
             <input type="submit" class="btn" value="Sign up" />
            
-            <div class="social-media">
+            <!-- <div class="social-media">
               <a href="#" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
               </a>
@@ -78,7 +81,7 @@
               <a href="#" class="social-icon">
                 <i class="fab fa-linkedin-in"></i>
               </a>
-            </div>
+            </div> -->
           </form>
         </div>
       </div>
@@ -88,7 +91,7 @@
           <div class="content">
             <h3>New here ?</h3>
             <p>
-              Our goal is to turn data into information and information into insight.
+              Register yourself.
             </p>
             <button class="btn transparent" id="sign-up-btn">
               Sign up
@@ -99,7 +102,7 @@
           <div class="content">
             <h3>One of us ?</h3>
             <p>
-              You can have data without information but you can not have inforamation without data.
+              Login here.
             </p>
             <button class="btn transparent" id="sign-in-btn">
               Sign in
