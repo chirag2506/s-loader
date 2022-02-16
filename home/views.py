@@ -13,9 +13,11 @@ def uploadFiles(request):
 
 def signup(request):
     registered = False
-    if request.method == 'POST':
-        data = request.POST
-        print(data)
+    if request.method == 'POST':  
+        username = request.POST.get('Username')
+        password = request.POST.get('Password')
+        print(username, password)
+        return render(request, "home.html")
         #     user = form.save()
         #     user.set_password(user.password)
         #     user.save()
@@ -48,7 +50,8 @@ def login_view(request):
     #         return HttpResponse("Invalid login details given")
     # else:
     #     return HttpResponseRedirect() #add error page link
-    # if request.method == 'POST':  
-    data = request.POST
-    print(data)
-    return render(request, "home.html")
+    if request.method=='POST':  
+        username = request.POST.get('Username')
+        password = request.POST.get('Password')
+        print(username, password)
+        return render(request, "home.html")

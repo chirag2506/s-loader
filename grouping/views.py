@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.forms import UserCreationForm 
 from grouping.functions.functions import get_fields,handle_uploaded_file
 from grouping.forms import uploadform
 import os
@@ -48,7 +49,7 @@ def column_pro(request):
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
         print(fields)
-        path = os.walk('/Users/drumilshah/Documents/S-Loader/s-loader/grouping/static')
+        path = os.walk('/Users/HP/projects/s-loader/grouping/static')
         print(path)
         files_path=[]
         file_name=[]
@@ -56,8 +57,8 @@ def column_pro(request):
             for file in files:
                 file_name.append(file)
                 print("BASE dir: ", BASE_DIR)
-                files_path.append(os.path.join('/Users/drumilshah/Documents/S-Loader/s-loader/grouping/static/',file))
-        engine = create_engine('mysql://uhkrlahg2ljoerco:MNbjIBecSgpt1D3pP3MC@blvi5qsq2ijxd8lzbkg1-mysql.services.clever-cloud.com:3306/blvi5qsq2ijxd8lzbkg1')
+                files_path.append(os.path.join('/Users/HP/projects/s-loader/grouping/static',file))
+        engine = create_engine('mysql://uaf9zenjb3zwdszd:MOTaVWWxUIT6MOPCXNU0@bldot2uujx3isi3clafh-mysql.services.clever-cloud.com:3306/bldot2uujx3isi3clafh')
         x=0
         for i,j in zip(files_path,fields):
             print("i: ", i)
