@@ -44,37 +44,36 @@ def column_pro(request):
         fields=[]
         t=request.POST
         for i in t:
-            fields.append(request.POST.getlist(i))
+            fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
-        path = os.walk(os.path.join(BASE_DIR,'grouping\static'))
+        fields=sorted(fields,key=lambda x: (x[1]))
+        print(fields)
+        path = os.walk('/Users/drumilshah/Documents/S-Loader/s-loader/grouping/static')
         print(path)
         files_path=[]
         file_name=[]
         for root, directories, files in path:
-            print("files********: ", files)
             for file in files:
                 file_name.append(file)
                 print("BASE dir: ", BASE_DIR)
-                files_path.append(os.path.join(os.path.join(BASE_DIR,'grouping\static'),file))
-        engine = create_engine('mysql://uaf9zenjb3zwdszd:MOTaVWWxUIT6MOPCXNU0@bldot2uujx3isi3clafh-mysql.services.clever-cloud.com:3306/bldot2uujx3isi3clafh')
+                files_path.append(os.path.join('/Users/drumilshah/Documents/S-Loader/s-loader/grouping/static/',file))
+        engine = create_engine('mysql://uhkrlahg2ljoerco:MNbjIBecSgpt1D3pP3MC@blvi5qsq2ijxd8lzbkg1-mysql.services.clever-cloud.com:3306/blvi5qsq2ijxd8lzbkg1')
         x=0
-        print("file path: ", files_path)
-        print('fields:', fields)
         for i,j in zip(files_path,fields):
-            print("inside ----------")
+            print("i: ", i)
             df=pd.read_excel(i)
+            print("j: ", j)
+            df = df[j[0]]
             print(df)
-            df = df[j]
             t=engine.table_names()
             if file_name[x] not in t:
                 df.to_sql(file_name[x], con=engine)
-                print("stored to mysql-----------------------")
             else:
                 c=file_name[x]+str(random.randint(0,9))
                 while c in t:
                     c+=str(random.randint(0,9))
                 df.to_sql(c, con=engine)
-            # os.remove(i)
+            os.remove(i)
             x+=1
             
         return render(request, "multiple.html")

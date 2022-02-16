@@ -2,7 +2,7 @@ import pandas as pd
 import csv
 from io import BufferedReader
 def handle_uploaded_file(f):
-    with open('grouping/static/upload'+f.name,'wb+') as destination:
+    with open('grouping/static/'+f.name,'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
     return destination

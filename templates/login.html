@@ -16,7 +16,8 @@
       <img src="{% static 'images.jpg' %}" alt="dashboard" style="width:100%" height="100%" >
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="home" class="sign-in-form">
+          <form action="home" class="sign-in-form" method="post">
+            {% csrf_token %}
             <h2 class="title">Sign in</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
@@ -43,7 +44,8 @@
               </a>
             </div>
           </form>
-          <form action="home" class="sign-up-form">
+          <form action="signup" class="sign-up-form" method="post">
+            {% csrf_token %}
             <h2 class="title">Sign up</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>

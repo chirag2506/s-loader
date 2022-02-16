@@ -37,13 +37,13 @@ def home(request):
 
         wb_without_duplicates = wb.drop_duplicates() #new dataframe without duplicates
         
-        return render(request, "index.html", context)
+        return render(request, "index1.html", context)
         
         # document = FilesUpload.objects.create(file = excel_file)
         # document.save()
         # return HttpResponse("FILE UPLOADED")
     else:
-        return render(request, "index.html")
+        return render(request, "index1.html")
 
 def upload(request):
     return render(request, "upload.html")

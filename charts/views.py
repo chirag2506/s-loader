@@ -27,4 +27,4 @@ def mydashboard(request):
     yearly = StoreData.objects.annotate(year=TruncYear('date')).values('year').annotate(AmtY=Count('date')).values('year','AmtY')
     snapYear = round(yearly.latest('year')['AmtY'],0)
     context = {'weekly': weekly ,'monthly': monthly, 'yearly': yearly, 'snapWeek': snapWeek, 'snapMonth':snapMonth, 'snapYear':snapYear,}
-    return render(request, "dashboard/index.html", context)
+    return render(request, "index.html", context)
