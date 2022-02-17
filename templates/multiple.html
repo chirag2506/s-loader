@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% block content %}
+<div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
 <div class="multiple_files">
 	<fieldset name="Multiple Files Upload">
 		<form method="post" action="{% url 'grouping:select_columns' %}" enctype="multipart/form-data" class="form_style">

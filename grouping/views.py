@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm 
@@ -25,6 +26,9 @@ def select(request):
         context={}
         if len(files)>5:
             messages.success(request, "Please upload 5 files at max" )
+            return redirect('/home')
+        if len(files)==0:
+            messages.success(request, "Please upload a file" )
             return redirect('/home')
         for i in files:
             if i.name[-4:]!='xlsx':
@@ -55,15 +59,14 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
-        sys_path = os.environ["PATH"]
-        path = os.walk(sys_path)
+        s_path = '/Users/HP/projects/s-loader/grouping/static'
+        path = os.walk(s_path)
         files_path=[]
         file_name=[]
         for root, directories, files in path:
             for file in files:
                 file_name.append(file)
-                print("BASE dir: ", BASE_DIR)
-                files_path.append(os.path.join(sys_path,file))
+                files_path.append(os.path.join(s_path,file))
         engine = create_engine(os.environ["DB_CONNECTION_URI"])
         x=0
         for i,j in zip(files_path,fields):
@@ -77,9 +80,10 @@ def column_pro(request):
                 while c in t:
                     c+=str(random.randint(0,9))
                 df.to_sql(c, con=engine)
-            # os.remove(i)
+            #os.remove(i)
+        
             x+=1
-            
+        messages.success(request, "Grouping completed!" )
         return redirect('/home')
     else:
         return render(request, "home.html")

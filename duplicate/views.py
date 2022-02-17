@@ -3,20 +3,14 @@ from urllib import request
 from django.shortcuts import render, HttpResponse
 from .models import FilesUpload
 import pandas as pd
-import pip
-# pip.main(["install", "openpyxl"])
-import json
 from .forms import uploadform
 import os
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
-# Create your views here.
 def home(request):
     if request.method == "POST":
         path = os.environ["PATH"]
-        # user=uploadform(request.POST,request.FILES)
-        # files = request.FILES.getlist('files')
         temp_file=os.walk(path)
         columns=[]
         rows=[]
@@ -26,7 +20,7 @@ def home(request):
         for root, directories, files in temp_file:
             for file in files:
                 df=pd.read_excel(path+file)
-                duplicates = df[df.duplicated()]  #dataframe for showing duplicate entries
+                duplicates = df[df.duplicated()] 
                 num_duplicates.append(duplicates.shape[0])
                 columns.append(list(duplicates.columns))
                 rows.append(duplicates.values[:,:])
@@ -36,20 +30,9 @@ def home(request):
                     'columns':list(duplicates.columns),
                     'rows':duplicates.values[:,:],
                 })
-
         print('duplicates',num_duplicates)
-        # parsing the DataFrame in json format.
-        # json_records = duplicates.reset_index().to_json(orient ='records')
-        # data = []
-        # data = json.loads(json_records)
-        print(context)
-        # wb_without_duplicates = df.drop_duplicates() #new dataframe without duplicates
         
         return render(request, "index1.html", {'context': context})
-        
-        # document = FilesUpload.objects.create(file = excel_file)
-        # document.save()
-        # return HttpResponse("FILE UPLOADED")
     else:
         return render(request, "index1.html")
 
@@ -64,17 +47,13 @@ def group(request):
         wb_without_duplicates = df.drop_duplicates()
         columns_head = wb_without_duplicates.columns
         rows = wb_without_duplicates.values[:,:]
-
         context_next = {"something": True, "df_columns": columns_head,"df_rows": rows}
-
         return render(request, "grouping.html", context_next)
 
     elif 'keep_dup' in request.POST:
         columns_head = df.columns
         rows = df.values[:,:]
-
         context_next = {"something": True, "df_columns": columns_head,"df_rows": rows}
-
         return render(request, "grouping.html", context_next)
 
     else:
