@@ -11,7 +11,9 @@ import pandas as pd
 from sqlalchemy import create_engine
 import random
 from django.contrib import messages
+from dotenv import load_dotenv, find_dotenv
 
+load_dotenv(find_dotenv())
 BASE_DIR = Path(__file__).resolve().parent.parent
 def selcol(request):
     return render(request, 'multiple.html')
@@ -53,15 +55,16 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
-        path = os.walk('/Users/HP/projects/s-loader/grouping/static')
+        sys_path = os.environ["PATH"]
+        path = os.walk(sys_path)
         files_path=[]
         file_name=[]
         for root, directories, files in path:
             for file in files:
                 file_name.append(file)
                 print("BASE dir: ", BASE_DIR)
-                files_path.append(os.path.join('/Users/HP/projects/s-loader/grouping/static',file))
-        engine = create_engine('mysql://uaf9zenjb3zwdszd:MOTaVWWxUIT6MOPCXNU0@bldot2uujx3isi3clafh-mysql.services.clever-cloud.com:3306/bldot2uujx3isi3clafh')
+                files_path.append(os.path.join(sys_path,file))
+        engine = create_engine(os.environ["DB_CONNECTION_URI"])
         x=0
         for i,j in zip(files_path,fields):
             df=pd.read_excel(i)
@@ -74,7 +77,7 @@ def column_pro(request):
                 while c in t:
                     c+=str(random.randint(0,9))
                 df.to_sql(c, con=engine)
-            #os.remove(i)
+            # os.remove(i)
             x+=1
             
         return redirect('/home')

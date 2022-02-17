@@ -8,32 +8,34 @@ import pip
 import json
 from .forms import uploadform
 import os
+from dotenv import load_dotenv, find_dotenv
 
+load_dotenv(find_dotenv())
 # Create your views here.
 def home(request):
     if request.method == "POST":
-
+        path = os.environ["PATH"]
         # user=uploadform(request.POST,request.FILES)
         # files = request.FILES.getlist('files')
-        temp_file=os.walk('/Users/HP/projects/s-loader/grouping/static')
+        temp_file=os.walk(path)
         columns=[]
         rows=[]
         num_duplicates=[]
         num_tables=0
-        context={}
+        context=[]
         for root, directories, files in temp_file:
             for file in files:
-                df=pd.read_excel('/Users/HP/projects/s-loader/grouping/static/'+file)
+                df=pd.read_excel(path+file)
                 duplicates = df[df.duplicated()]  #dataframe for showing duplicate entries
                 num_duplicates.append(duplicates.shape[0])
                 columns.append(list(duplicates.columns))
                 rows.append(duplicates.values[:,:])
                 num_tables+=1
-                context['table'+str(num_tables)]={
+                context.append({
                     'num_duplicates':duplicates.shape[0],
                     'columns':list(duplicates.columns),
                     'rows':duplicates.values[:,:],
-                }
+                })
 
         print('duplicates',num_duplicates)
         # parsing the DataFrame in json format.
@@ -41,9 +43,9 @@ def home(request):
         # data = []
         # data = json.loads(json_records)
         print(context)
-        wb_without_duplicates = df.drop_duplicates() #new dataframe without duplicates
+        # wb_without_duplicates = df.drop_duplicates() #new dataframe without duplicates
         
-        return render(request, "index1.html", context)
+        return render(request, "index1.html", {'context': context})
         
         # document = FilesUpload.objects.create(file = excel_file)
         # document.save()
