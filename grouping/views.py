@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm 
 from grouping.functions.functions import get_fields,handle_uploaded_file
@@ -23,7 +23,12 @@ def select(request):
         context={}
         if len(files)>5:
             messages.success(request, "Please upload 5 files at max" )
-            return render(request, "multiple.html")
+            return redirect('/home')
+        for i in files:
+            if i.name[-4:]!='xlsx':
+                messages.success(request, "Please upload files in xlsx format" )
+                return redirect('/home')
+        
         if user.is_valid():
             i=0
             for f in files:
@@ -48,9 +53,7 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
-        print(fields)
         path = os.walk('/Users/HP/projects/s-loader/grouping/static')
-        print(path)
         files_path=[]
         file_name=[]
         for root, directories, files in path:
@@ -61,11 +64,8 @@ def column_pro(request):
         engine = create_engine('mysql://uaf9zenjb3zwdszd:MOTaVWWxUIT6MOPCXNU0@bldot2uujx3isi3clafh-mysql.services.clever-cloud.com:3306/bldot2uujx3isi3clafh')
         x=0
         for i,j in zip(files_path,fields):
-            print("i: ", i)
             df=pd.read_excel(i)
-            print("j: ", j)
             df = df[j[0]]
-            print(df)
             t=engine.table_names()
             if file_name[x] not in t:
                 df.to_sql(file_name[x], con=engine)
@@ -74,9 +74,9 @@ def column_pro(request):
                 while c in t:
                     c+=str(random.randint(0,9))
                 df.to_sql(c, con=engine)
-            os.remove(i)
+            #os.remove(i)
             x+=1
             
-        return render(request, "multiple.html")
+        return redirect('/home')
     else:
-        return render(request, "multiple.html")
+        return render(request, "home.html")

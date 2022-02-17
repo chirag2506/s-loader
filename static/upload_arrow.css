@@ -17,14 +17,16 @@
 
 .drag-area {
   border: 2px dashed #fff;
-  height: 200px;
-  width: 400px;
+  height: 600px;
+  width: 600px;
   border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #5256ad;
+  background: #5995fd93;
+  margin-bottom: 10px;
+  padding-bottom:10px;
 }
 
 .drag-area.active {
@@ -57,7 +59,7 @@
   border: none;
   outline: none;
   background: #fff;
-  color: #5256ad;
+  color: #5995fd;
   border-radius: 5px;
   cursor: pointer;
 }

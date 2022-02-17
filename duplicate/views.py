@@ -7,7 +7,7 @@ import pip
 # pip.main(["install", "openpyxl"])
 import json
 from .forms import uploadform
-
+import os
 
 # Create your views here.
 def home(request):
@@ -15,27 +15,33 @@ def home(request):
 
         # user=uploadform(request.POST,request.FILES)
         # files = request.FILES.getlist('files')
+        temp_file=os.walk('/Users/HP/projects/s-loader/grouping/static')
+        columns=[]
+        rows=[]
+        num_duplicates=[]
+        num_tables=0
+        context={}
+        for root, directories, files in temp_file:
+            for file in files:
+                df=pd.read_excel('/Users/HP/projects/s-loader/grouping/static/'+file)
+                duplicates = df[df.duplicated()]  #dataframe for showing duplicate entries
+                num_duplicates.append(duplicates.shape[0])
+                columns.append(list(duplicates.columns))
+                rows.append(duplicates.values[:,:])
+                num_tables+=1
+                context['table'+str(num_tables)]={
+                    'num_duplicates':duplicates.shape[0],
+                    'columns':list(duplicates.columns),
+                    'rows':duplicates.values[:,:],
+                }
 
-        excel_file = request.FILES["myFile"]
-        wb = pd.read_excel(excel_file.read())
-
-        json_wb = wb.to_json()
-        request.session['wb'] = json_wb #saving workbook in session
-
-        # print(wb)
-        duplicates = wb[wb.duplicated()]  #dataframe for showing duplicate entries
-        num_duplicates = duplicates.shape[0]
-
-        columns_head = duplicates.columns
-        rows = duplicates.values[:,:]
-
+        print('duplicates',num_duplicates)
         # parsing the DataFrame in json format.
         # json_records = duplicates.reset_index().to_json(orient ='records')
         # data = []
         # data = json.loads(json_records)
-        context = {"something": True, "num_duplicates": num_duplicates, "df_columns": columns_head,"duplicates_df": rows}
-
-        wb_without_duplicates = wb.drop_duplicates() #new dataframe without duplicates
+        print(context)
+        wb_without_duplicates = df.drop_duplicates() #new dataframe without duplicates
         
         return render(request, "index1.html", context)
         

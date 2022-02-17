@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import User
 from django.contrib import messages
 from sloader.constants import msg_d
@@ -26,11 +26,15 @@ def signup(request):
             user.save()
             print("success register")
             messages.success(request, msg_d['signup_success'])
-            return render(request, "home.html")
+            return redirect('/home')
         else:
             print("not register")
             messages.error(request, msg_d['not_match_password'])
             return render(request, "login.html")
+
+def home(request):
+    return render(request,'home.html')
+
 
 def login_view(request):
     if request.method=='POST':  
@@ -44,8 +48,8 @@ def login_view(request):
             print(data)
             print("Login successfull")
             messages.success(request, msg_d["login_success"])
-            return render(request, "home.html")
+            return redirect('/home')
         else:
             print("Enter valide data")
             messages.error(request, msg_d['invalid_data'])
-            return render(request, "login.html")
+            return redirect("/")

@@ -1,14 +1,22 @@
+
 {% if messages %}
-<ul class="messages">
+<ul class="messages" id="message">
     {% for message in messages %}
-    <div class="container-fluid p-0">
-    <div class="alert {{ message.tags }} alert-dismissible" role="alert" style="background-color:#ffd689; height:57px; border-radius:5px; text-align:center;" >
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="True">&times;</span>
-        </button>
+    <div class="container-fluid" style="margin-top:5px;">
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert" style="background-color:#80afee; height:10%; border-radius:6px; text-align:center;" >
+    
         {{ message }}
+        
     </div>
     </div>
     {% endfor %}
 </ul>
 {% endif %}
+
+<script>
+    const myTimeout = setTimeout(myGreeting, 5000);
+
+function myGreeting() {
+  document.getElementById("message").innerHTML = ""
+}
+</script>

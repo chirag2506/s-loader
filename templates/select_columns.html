@@ -1,13 +1,34 @@
 {% extends 'base.html'%}
 {% block content %}
 {% csrf_token %}
-<div class="row">
-    <div class="col-md-12 text-center">
-        <h2 style="color:#fff;border:1px solid white;padding:10px;margin:15px;">Select columns you want to insert</h2>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark" style="border-radius:0px; padding-bottom:5px; margin-bottom:0px;">
+    <a class="navbar-brand" style="color:white; font-size:xx-large;"href="#">S - Loader</a>
+    
+    <div id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#"></a>
+        </li>
+      </ul>
     </div>
-</div>
+  </nav>
+  
 <div class="row selcol_des">
-    <div class="col-md-6 col-md-offset-3">
+    
+    <div class="col-md-6 col-md-offset-3" >
+
         <form id="msform" action="column_process" method="post">
                 <ul id="progressbar">
                     {% csrf_token %}
@@ -22,7 +43,7 @@
             {% csrf_token %}
                 {% for i,j in context.items %}
                     <fieldset>
-                    
+                    <h1 style="padding:15px; margin-bottom:15px; background-color:#5995fd79 ">Select Columns for grouping</h1>
                     <h2 class="fs-title">{{i}}</h3>
                     {% for k in j %}
                     <div class="fieldcol">
@@ -46,20 +67,5 @@
                
         </form>
     </div>
-</div>
-<div class="row">
-        <div class="col-lg-12">
-            <div class="form-group">
-                 {% if messages %}
-                        {% for message in messages %}
-                            {% if message.tags == 'success' %}
-                                <div class="alert alert-success">{{ message }}</div>
-                            {% elif message.tags == 'error' %}
-                                <div class="alert alert-danger">{{ message }}</div>
-                            {% endif %}
-                        {% endfor %}
-                 {% endif %}
-            </div>
-        </div>
 </div>
 {% endblock %}

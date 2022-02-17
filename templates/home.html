@@ -1,4 +1,5 @@
 {%load static%}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,32 +15,92 @@
     <link rel="stylesheet" href="static/upload_arrow.css">
     <link rel="icon" href="icon.png">
     <script src="https://kit.fontawesome.com/7a538433c3.js" crossorigin="anonymous"></script>
-</head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<body>
-    <header>
-        <img class="navlogo" src="{% static 'navlogo1.jpg' %}" alt="sidelogo">
-        <nav>
-            <ul class="navlinks">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Contacts</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-        </nav>
-    </header>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+      .navbar{
+       height:60px;
+      }
+    .navbar-brand
+    {
+        position: absolute;
+        width: 30%;
+        left: 0;
+        text-align: center;
+        margin:0 auto;
+    }
+  </style>
+</head>
+<script>
+
+    if(document.getElementById("upload").value.length >0) {
+        alert('file selected');
+        document.getElementById("upload").value.focus();
+    }
+    </script>
+<body style="height:700px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="border-radius:0px;">
+        <a class="navbar-brand" style="color:white; font-size:xx-large;"href="#">S - Loader</a>
+        
+        <div id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#"></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
     {% include 'messages.html' %}
-    <div class="wrapper">
+    <div class="row">
+    <div class="col container" style="margin-top:none; ">
         <div class="content">
-            <form action="upload" method="POST">
+            <!--<form action="{% url 'grouping:select_columns' %}" method="POST" >
                 {% csrf_token %}
-                <div class="drag-area">
+                <div class="drag-area" style="height: 300px;width: 400px; margin-bottom:10px;align-content:center">
                     <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                    <input type="file" hidden>
-                    <a class="drophere" href="#"><button>Drop your files here</button></a>
+                <label id="upload" class="drophere">  
+                    <input  class="file_but" type="file" name="files" multiple>
+                    Drop your files here</label>
                 </div>
-            </form>
+            </form>-->
+        <div class="drag-area" style="height: 350px;width: 400px; margin-bottom:10px;align-content:center">
+            <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            {% include 'multiple.html'%}
+        </div>
+            
         </div>
     </div>
+    <div class="col container" style="margin-top:none; ">
+        <div class="content">
+            <!--<form action="{% url 'grouping:select_columns' %}" method="POST" >
+                {% csrf_token %}
+                <div class="drag-area" style="height: 300px;width: 400px; margin-bottom:10px;align-content:center">
+                    <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <label id="upload" class="drophere">  
+                    <input  class="file_but" type="file" name="files" multiple>
+                    Drop your files here</label>
+                </div>
+            </form>-->
+        <div class="drag-area" style="height: 350px;width: 400px; margin-bottom:10px;align-content:center">
+            <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            {% include 'multiple_duplicate.html'%}
+        </div>
+            
+        </div>
+    </div>
+</div>
 
     <!-- <div class="card">
             <div class="imgbx">
@@ -78,53 +139,21 @@
                     </div>
                     </div>
              </div> -->
-    </div>
-    <footer>
+    <!--</div>
+    <footer style="height:50%">
         <div class="info">
-            <div class="fw about">
+            <div class="">
                 <h2>ABOUT US</h2>
                 <p>The objective of this project is to build a web app with node/ExpressJS
                     and MySQL database. These apps will be useful for your Database or Data
                     warehouse concerns. This app can support uploading your existing excel
                     file with format .xlsx or .xls into database MySQL. It can use upload
                     multiple files, but we will limit 5 files for server optimization reason</p>
-                <div class="socialmedia">
-                    <ul>
-                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#"><i class="fab fa-instagram-f"></i></a></li>
-                        <li><a href="#"><i class="fab fa-linkdin-f"></i></a></li>
-                    </ul>
-                </div>
+                
             </div>
-            <div class="fw link">
-                <h2>QUICK LINKS</h2>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </div>
-            <div class="fw contact">
-                <h2>CONTACT US</h2>
-                <ul>
-                    <li>
-                        <span><i class="fab fa-mapmarker-alt"></i></span>
-                        <p>Searce pune office, Maharastra</p>
-                    </li>
-                    <li>
-                        <span><i class="fab fa-envolpe"></i></span>
-                        <a href="#">harryarmando81@gmail.com</a>
-                    </li>
-                    <li>
-                        <span><i class="fab fa-phone-volume"></i></span>
-                        <a href="#">98721 89500</a>
-                    </li>
-
-                </ul>
-            </div>
+            
         </div>
-    </footer>
+    </footer>-->
 
 
 </body>

@@ -73,7 +73,7 @@
             margin-bottom: 10px;
             text-align: left;
             text-indent: 25%;
-            width: 35%;
+            width: 50%;
             box-sizing: border-box;
             font-family: montserrat;
             color: #14171a;
@@ -94,7 +94,7 @@
         /*buttons*/
         #msform .action-button {
             width: 100px;
-            background: #ee9e09;
+            background: #5995fd;
             font-weight: bold;
             color: white;
             border: 0 none;
@@ -130,7 +130,8 @@
             font-size: 18px;
             text-transform: uppercase;
             color: #2C3E50;
-            margin-bottom: 10%;
+            margin-top:35px;
+            margin-bottom: 25px;
             letter-spacing: 2px;
             font-weight: bold;
         }
@@ -156,7 +157,7 @@
             color: rgb(255, 255, 255);
             text-transform: uppercase;
             font-size: 9px;
-            width: 30%;
+            width: 33%;
             position: relative;
             letter-spacing: 1px;
         }
@@ -191,7 +192,7 @@
         /*marking active/completed steps green*/
         /*The number of the step and the connector before it = green*/
         #progressbar li.active:before, #progressbar li.active:after {
-            background: #ee9e09;
+            background: #5995fd;
             color: rgb(255, 255, 255);
         }
         
@@ -202,35 +203,32 @@
         }
         .multiple_files{
             position:relative;
-            align-content: center;
-            align-items: center;
-            
-            width: 100%;
+            width: 80%;
             height:40%;
-            padding: 50px;
+            padding: 10px;
             color: black;
         }
         .multiple_files input[type=submit]{
             padding: 6px;
-            width: 10%;
+            width: 30%;
             color:black;
-            background-color: #ee9e09;
+            background-color: white;
             border: none;
 
         }
         .selcol_des{
             position: relative;
-            background-color: #d0d0d6;
-            height: 550px;
+            background-color: #c2c2c2;
+            padding-bottom:80px;
+            min-height: 100%;
+            overflow:hidden;
         }
         .fileupl{
-            padding: 10px;
-            width: auto;
+            width:60%;
+            padding: 5px;
         }
         .form_style{
-            background-color: #eeeeee;
             text-align: center;
-            padding: 20px;
         }
 
         .file_but{
@@ -241,12 +239,11 @@
         input.file_but{
             text-align: center;
             display: inline-block;
-            width: 50%;
+            width: 150%;
         }
     </style>
 </head>
     <body>
-        {% include 'messages.html' %}
 		{% block content %}
         {% endblock %}
     </body>

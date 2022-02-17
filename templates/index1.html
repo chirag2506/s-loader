@@ -6,16 +6,15 @@
 </head>
 
 <body>
-
-    {% if something %}
     <p>Hello,</p>
-
+    {% for i,j in context.items %}
     <p>Number of duplicate entries: {{num_duplicates}}</p>
     <div>
+        
         <table border="1">
             <thead>
                 <tr>
-                    {% for value in df_columns %}
+                    {% for k in columns[i] %}
                     <th>
                         {{ value }}
                     </th>
@@ -24,7 +23,7 @@
             </thead>
 
             <tbody>
-                {% for value in duplicates_df %}
+                {% for value in rows[i] %}
                 <tr>
                     {% for cell in value %}
 
@@ -38,7 +37,8 @@
     <br>
     <p>Would you like to delete these duplicate records or proceed as is?</p>
     <br>
-
+    {% endfor %}
+    {% endwith %}
     <form action="/duplicate/grouping/" method="post">
         {% csrf_token %}
 
@@ -46,10 +46,7 @@
         <button type="submit" name="keep_dup">KEEP DUPLICATE RECORDS</button>
     </form>
 
-    {% else %}
-    <a href="/duplicate/upload">Please upload a file</a>
 
-    {% endif %}
 
 </body>
 
