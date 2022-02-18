@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>GROUPING</title>
+    <link rel="stylesheet" href="{% static 'style_duplicate.css' %}" />
 </head>
 
 <body>
@@ -12,7 +14,7 @@
     <p>THIS IS GROUPING(next) PAGE</p>
 
     <div>
-        <table border="1">
+        <table>
             <thead>
                 <tr>
                     {% for value in df_columns %}
