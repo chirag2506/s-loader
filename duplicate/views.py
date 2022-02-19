@@ -10,8 +10,9 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 def home(request):
     if request.method == "POST":
-        path = os.environ["PATH"]
-        temp_file=os.walk(path)
+        spath = "C:\\Users\\chira\\Desktop\\OFFICIAL\\SEARCE\\Training\\s-loader\\grouping\\static\\"
+        print("path =", spath)
+        temp_file=os.walk(spath)
         columns=[]
         rows=[]
         num_duplicates=[]
@@ -19,7 +20,7 @@ def home(request):
         context=[]
         for root, directories, files in temp_file:
             for file in files:
-                df=pd.read_excel(path+file)
+                df=pd.read_excel(spath+file)
                 duplicates = df[df.duplicated()] 
                 num_duplicates.append(duplicates.shape[0])
                 columns.append(list(duplicates.columns))
