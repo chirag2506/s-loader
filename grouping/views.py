@@ -59,7 +59,7 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
-        s_path = '/Users/HP/projects/s-loader/grouping/static'
+        s_path = "C:\\Users\\chira\\Desktop\\OFFICIAL\\SEARCE\\Training\\s-loader\\grouping\\static\\"
         path = os.walk(s_path)
         files_path=[]
         file_name=[]
@@ -67,13 +67,17 @@ def column_pro(request):
             for file in files:
                 file_name.append(file)
                 files_path.append(os.path.join(s_path,file))
-        engine = create_engine(os.environ["DB_CONNECTION_URI"])
+        print(files_path)
+        engine = create_engine("mysql://uhxnrfxmodhvgw5b:OhzGBZeJgPtZ0HegRVdp@bhqrn8jopnuksupl1mpf-mysql.services.clever-cloud.com:3306/bhqrn8jopnuksupl1mpf")
         x=0
         for i,j in zip(files_path,fields):
             df=pd.read_excel(i)
+            print(df)
             df = df[j[0]]
             t=engine.table_names()
+            print(t)
             if file_name[x] not in t:
+                print(file_name[x])
                 df.to_sql(file_name[x], con=engine)
             else:
                 c=file_name[x]+str(random.randint(0,9))
