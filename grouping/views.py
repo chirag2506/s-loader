@@ -1,7 +1,7 @@
 from multiprocessing import context
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm 
+from django.contrib.auth.forms import UserCreationForm
 from grouping.functions.functions import get_fields,handle_uploaded_file
 from grouping.forms import uploadform
 import os
@@ -13,6 +13,7 @@ from sqlalchemy import create_engine
 import random
 from django.contrib import messages
 from dotenv import load_dotenv, find_dotenv
+from datetime import datetime
 
 load_dotenv(find_dotenv())
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,7 +35,7 @@ def select(request):
             if i.name[-4:]!='xlsx':
                 messages.success(request, "Please upload files in xlsx format" )
                 return redirect('/home')
-        
+
         if user.is_valid():
             i=0
             for f in files:
@@ -59,7 +60,11 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
+<<<<<<< Updated upstream
         s_path = "C:\\Users\\chira\\Desktop\\OFFICIAL\\SEARCE\\Training\\s-loader\\grouping\\static\\"
+=======
+        s_path = '/Users/pradeep/Desktop/s-loader/grouping/static'
+>>>>>>> Stashed changes
         path = os.walk(s_path)
         files_path=[]
         file_name=[]
@@ -74,6 +79,7 @@ def column_pro(request):
             df=pd.read_excel(i)
             print(df)
             df = df[j[0]]
+            df['date']=datetime.today().strftime('%Y-%m-%d')
             t=engine.table_names()
             print(t)
             if file_name[x] not in t:
@@ -84,10 +90,12 @@ def column_pro(request):
                 while c in t:
                     c+=str(random.randint(0,9))
                 df.to_sql(c, con=engine)
-            #os.remove(i)
-        
+            os.remove(i)
+
             x+=1
         messages.success(request, "Grouping completed!" )
+
         return redirect('/home')
+
     else:
         return render(request, "home.html")
