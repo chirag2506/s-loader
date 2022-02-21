@@ -15,7 +15,6 @@ def home(request):
     columns=[]
     rows=[]
     num_duplicates=[]
-    num_tables=0
     context=[]
     for root, directories, files in temp_file:
         for file in files:
@@ -25,7 +24,6 @@ def home(request):
             num_duplicates.append(duplicates.shape[0])
             columns.append(list(duplicates.columns))
             rows.append(duplicates.values[:,:])
-            num_tables+=1
             context.append({
                 "file_name": file,
                 'num_duplicates':duplicates.shape[0],

@@ -3,6 +3,6 @@ from . import views
 
 
 urlpatterns = [
-    path('dashboard', views.mydashboard, name='dashboard')
+    path('dashboard', views.dashboard, name='dashboard')
     # path('view_data', views.tableOfData, name='blog-tableOfData'),
 ]
