@@ -1,13 +1,10 @@
 from multiprocessing import context
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
 from grouping.functions.functions import get_fields,handle_uploaded_file
 from grouping.forms import uploadform
 import os
 from pathlib import Path
 import pandas as pd
-import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine
 import random
@@ -46,7 +43,6 @@ def select(request):
             con={
                 'context':context
             }
-            #print(con)
             return render(request, "select_columns.html",con)
     else:
         user=uploadform()
@@ -60,7 +56,7 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
-        s_path = "C:\\Users\\chira\\Desktop\\OFFICIAL\\SEARCE\\Training\\s-loader\\grouping\\static\\"
+        s_path = "/Users/HP/projects/s-loader/grouping/static"
         path = os.walk(s_path)
         files_path=[]
         file_name=[]
@@ -69,7 +65,7 @@ def column_pro(request):
                 file_name.append(file)
                 files_path.append(os.path.join(s_path,file))
         print(files_path)
-        engine = create_engine("mysql://uhxnrfxmodhvgw5b:OhzGBZeJgPtZ0HegRVdp@bhqrn8jopnuksupl1mpf-mysql.services.clever-cloud.com:3306/bhqrn8jopnuksupl1mpf")
+        engine = create_engine("mysql://uaf9zenjb3zwdszd:MOTaVWWxUIT6MOPCXNU0@bldot2uujx3isi3clafh-mysql.services.clever-cloud.com:3306/bldot2uujx3isi3clafh")
         x=0
         for i,j in zip(files_path,fields):
             df=pd.read_excel(i)
@@ -86,12 +82,12 @@ def column_pro(request):
                 while c in t:
                     c+=str(random.randint(0,9))
                 df.to_sql(c, con=engine)
-            os.remove(i)
+            # os.remove(i)
 
             x+=1
-        messages.success(request, "Grouping completed!" )
+        messages.success(request, "Grouping completed!", extra_tags="uploaded")
 
-        return redirect('/home')
+        return redirect('/duplicate/')
 
     else:
         return render(request, "home.html")

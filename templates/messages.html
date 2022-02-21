@@ -2,8 +2,8 @@
 {% if messages %}
 <ul class="messages" id="message">
     {% for message in messages %}
-    <div class="container-fluid" style="margin-top:5px;">
-    <div class="alert {{ message.tags }} alert-dismissible" role="alert" style="background-color:#80afee; height:10%; border-radius:6px; text-align:center;" >
+    <div class="container-fluid">
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert" style="background-color:#80afee; border-radius:6px; text-align:center;" >
     
         {{ message }}
         

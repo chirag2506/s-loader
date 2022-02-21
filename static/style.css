@@ -9,20 +9,19 @@
 body,
 input {
   font-family: "Poppins", sans-serif;
-  overflow: hidden;
+
 }
 
 .container {
   position: relative;
-  width: 100%;
+ 
   background-color: #fff;
   min-height: 100vh;
-  overflow: hidden;
 }
 
 .forms-container {
   position: absolute;
-  width: 100%;
+  overflow: visible;
   height: 100%;
   top: 0;
   left: 0;
@@ -48,7 +47,6 @@ form {
   flex-direction: column;
   padding: 0rem 5rem;
   transition: all 0.2s 0.7s;
-  overflow: hidden;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
 }
@@ -240,7 +238,7 @@ img {
 
 .container.sign-up-mode:before {
   transform: translate(100%, -50%);
-  right: 52%;
+  right: 54%;
 }
 
 .container.sign-up-mode .left-panel .image,
@@ -249,7 +247,7 @@ img {
 }
 
 .container.sign-up-mode .signin-signup {
-  left: 25%;
+  
 }
 
 .container.sign-up-mode form.sign-up-form {
@@ -298,7 +296,6 @@ img {
   }
 
   .panel {
-    flex-direction: row;
     justify-content: space-around;
     align-items: center;
     padding: 2.5rem 8%;

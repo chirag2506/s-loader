@@ -9,33 +9,31 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 def home(request):
-    if request.method == "POST":
-        spath = "C:\\Users\\chira\\Desktop\\OFFICIAL\\SEARCE\\Training\\s-loader\\grouping\\static\\"
-        print("path =", spath)
-        temp_file=os.walk(spath)
-        columns=[]
-        rows=[]
-        num_duplicates=[]
-        num_tables=0
-        context=[]
-        for root, directories, files in temp_file:
-            for file in files:
-                df=pd.read_excel(spath+file)
-                duplicates = df[df.duplicated()] 
-                num_duplicates.append(duplicates.shape[0])
-                columns.append(list(duplicates.columns))
-                rows.append(duplicates.values[:,:])
-                num_tables+=1
-                context.append({
-                    'num_duplicates':duplicates.shape[0],
-                    'columns':list(duplicates.columns),
-                    'rows':duplicates.values[:,:],
-                })
-        print('duplicates',num_duplicates)
-        
-        return render(request, "index1.html", {'context': context})
-    else:
-        return render(request, "index1.html")
+    spath = "/Users/HP/projects/s-loader/grouping/static/"
+    print("path =", spath)
+    temp_file=os.walk(spath)
+    columns=[]
+    rows=[]
+    num_duplicates=[]
+    num_tables=0
+    context=[]
+    for root, directories, files in temp_file:
+        for file in files:
+            print("file path: ", spath+file)
+            df=pd.read_excel(spath+file)
+            duplicates = df[df.duplicated()] 
+            num_duplicates.append(duplicates.shape[0])
+            columns.append(list(duplicates.columns))
+            rows.append(duplicates.values[:,:])
+            num_tables+=1
+            context.append({
+                "file_name": file,
+                'num_duplicates':duplicates.shape[0],
+                'columns':list(duplicates.columns),
+                'rows':duplicates.values[:,:],
+            })
+    print('duplicates',num_duplicates)
+    return render(request, "duplicate.html", {'context': context})
 
 def upload(request):
     return render(request, "upload.html")

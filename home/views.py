@@ -15,7 +15,6 @@ def uploadFiles(request):
     return render(request, "multiple.html")
 
 def signup(request):
-    registered = False
     if request.method == 'POST':  
         username = request.POST.get('Username')
         email = request.POST.get('Email')
@@ -47,9 +46,9 @@ def login_view(request):
         if(data):
             print(data)
             print("Login successfull")
-            messages.success(request, msg_d["login_success"])
+            messages.success(request, msg_d["login_success"], extra_tags="invalid")
             return redirect('/home')
         else:
             print("Enter valide data")
-            messages.error(request, msg_d['invalid_data'])
+            messages.error(request, msg_d['invalid_data'], extra_tags="invalid")
             return redirect("/")
