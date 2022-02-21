@@ -14,7 +14,7 @@
     <title>Sign in & Sign up Form</title>
     
   </head>
-  <body>
+  <body style="overflow: hidden;">
     <div class="container">
       
       
@@ -50,11 +50,7 @@
             </div> -->
           </form>
           <div style=" z-index: 10;">
-            {% for  message in messages %}
-            {% if "invalid" in message.tags %}
             {% include 'messages.html' %}
-            {% endif %}
-            {% endfor %}
           </div>
       
           <form action="signup" class="sign-up-form" method="post">
