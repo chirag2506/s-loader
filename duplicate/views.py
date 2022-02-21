@@ -9,7 +9,7 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 def home(request):
-    spath = "/Users/drumilshah/Documents/S-Loader/s-loader/grouping/static/"
+    spath = "/Users/HP/projects/s-loader/grouping/static/"
     print("path =", spath)
     temp_file=os.walk(spath)
     columns=[]
