@@ -60,11 +60,7 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
-<<<<<<< Updated upstream
         s_path = "C:\\Users\\chira\\Desktop\\OFFICIAL\\SEARCE\\Training\\s-loader\\grouping\\static\\"
-=======
-        s_path = '/Users/pradeep/Desktop/s-loader/grouping/static'
->>>>>>> Stashed changes
         path = os.walk(s_path)
         files_path=[]
         file_name=[]
