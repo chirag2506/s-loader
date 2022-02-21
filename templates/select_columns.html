@@ -1,51 +1,54 @@
 {% extends 'base.html'%}
 {% block content %}
 {% csrf_token %}
-<head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-{%include 'navbar.html' %}  
-<div class="row selcol_des">
-    
-    <div class="col-md-6 col-md-offset-3" >
 
-        <form id="msform" action="column_process" method="post">
-                <ul id="progressbar">
-                    {% csrf_token %}
-                    {%for k in context%}
-                        {% if forloop.first %}
-                            <li class="active">{{k}}</li>
-                        {% elif not forloop.first %} 
-                            <li>{{k}}</li>
-                        {%endif%}
-                    {%endfor%}
-                </ul>
-            {% csrf_token %}
-                {% for i,j in context.items %}
-                    <fieldset>
-                    <h1 style="padding:15px; margin-bottom:15px; background-color:#5995fd79 ">Select Columns for grouping</h1>
-                    <h2 class="fs-title">{{i}}</h3>
-                    {% for k in j %}
-                    <div class="fieldcol">
-                        <input type="checkbox" name="{{ i }}[]" id="{{ forloop.counter}}" value="{{k}}" style="position: relative;" Checked/>
-                        <label for="{{ forloop.counter }}">{{k}}</label><br>
-                    </div>
-                    {% endfor %}
-                    {% if not forloop.first%}
-                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                    {%endif%} 
-                    {% if not forloop.last%}
-                        <input type="button" name="next" class="next action-button" value="Next"/>
-                    {%endif%} 
-                    {% if forloop.last%}
-                        <input type="submit" name="submit" class="submit action-button" value="Submit"/>
-                    {%endif%} 
-                    
-                    </fieldset>
-                {% endfor %}
-        
-               
-        </form>
-    </div>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+{%include 'navbar.html' %}
+<div class="row selcol_des">
+
+  <div class="col-md-6 col-md-offset-3">
+
+    <form id="msform" action="column_process" method="post">
+      <ul id="progressbar">
+        {% csrf_token %}
+        {%for k in context%}
+        {% if forloop.first %}
+        <li class="active">{{k}}</li>
+        {% elif not forloop.first %}
+        <li>{{k}}</li>
+        {%endif%}
+        {%endfor%}
+      </ul>
+      {% csrf_token %}
+      {% for i,j in context.items %}
+      <fieldset class="select_column_pop_up">
+        <h1 style="padding:15px; margin-bottom:15px; background-color:#5995fd79 ">Select Columns for grouping</h1>
+        <h2 class="fs-title">{{i}}</h3>
+          {% for k in j %}
+          <div class="fieldcol">
+            <input type="checkbox" name="{{ i }}[]" id="{{ forloop.counter}}" value="{{k}}" style="position: relative;"
+              Checked />
+            <label for="{{ forloop.counter }}">{{k}}</label><br>
+          </div>
+          {% endfor %}
+          {% if not forloop.first%}
+          <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+          {%endif%}
+          {% if not forloop.last%}
+          <input type="button" name="next" class="next action-button" value="Next" />
+          {%endif%}
+          {% if forloop.last%}
+          <input type="submit" name="submit" class="submit action-button" value="Upload" />
+          {%endif%}
+
+      </fieldset>
+      {% endfor %}
+
+
+    </form>
+  </div>
 </div>
 {% endblock %}

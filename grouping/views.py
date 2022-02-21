@@ -26,7 +26,7 @@ def select(request):
             messages.success(request, "Please upload 5 files at max" )
             return redirect('/home')
         if len(files)==0:
-            messages.success(request, "Please upload a file" )
+            messages.success(request, "Please select a file" )
             return redirect('/home')
         for i in files:
             if i.name[-4:]!='xlsx':
