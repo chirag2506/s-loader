@@ -36,7 +36,7 @@ import base64
 
 
 def dashboard(request):
-    spath = "/Users/drumilshah/Documents/S-Loader/s-loader/grouping/static/"
+    spath = "/Users/HP/projects/s-loader/grouping/static/"
     print("path =", spath)
     temp_file=os.walk(spath)
     items={}
@@ -88,8 +88,10 @@ def dashboard(request):
 
     print("items: ", items)
     context = {}
-    context["dup_graph"] = plot_bar(items['Counting duplicate rows'])
-
+    context["dup_graph"] = plot_bar(items["Counting duplicate rows"])
+    context["dup_graph1"] = plot_bar1(items["Counting null rows"])
+    context["dup_graph2"] = plot_bar2(items["Number of rows"])
+    context["dup_graph3"] = plot_bar3(items["Number of Columns"])
     print("context: ", context)
     return render(request, "charts.html", {'context': context})
 
@@ -103,3 +105,35 @@ def plot_bar(l: list):
         x.append(record['file_name'])
         y.append(record['num_dup'])
     return {'labels': x, 'num_dup': y}
+
+def plot_bar1(l: list):
+    x = []
+    y = []
+
+    for record in l:
+        print(record)
+        x.append(record['file_name'])
+        y.append(record['null_rows'])
+    return {'labels': x, 'null_rows': y}
+
+
+def plot_bar2(l: list):
+    x = []
+    y = []
+
+    for record in l:
+        print(record)
+        x.append(record['file_name'])
+        y.append(record['num_rows'])
+    return {'labels': x, 'num_rows': y}
+
+
+def plot_bar3(l: list):
+    x = []
+    y = []
+
+    for record in l:
+        print(record)
+        x.append(record['file_name'])
+        y.append(record['num_cols'])
+    return {'labels': x, 'num_cols': y}

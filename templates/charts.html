@@ -1,8 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
   <div id="container" style="width: 75%;">
     <canvas id="bar-chart"></canvas>
+  </div>
+  <div id="container" style="width: 75%;">
+    <canvas id="bar-chart1"></canvas>
+  </div>
+  <div id="container" style="width: 75%;">
+    <canvas id="bar-chart2"></canvas>
+  </div>
+  <div id="container" style="width: 75%;">
+    <canvas id="bar-chart3"></canvas>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
@@ -26,12 +36,78 @@
         }
       },
     };
+    var config1 = {
+      type: 'bar',
+      data: {
+          datasets: [{
+            data: {{ context.dup_graph1.null_rows | safe }},
+            backgroundColor: 'blue',
+            label: 'Duplicate rows',
+          }],
+          labels: {{ context.dup_graph1.labels | safe }}
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Duplicate rows counts'
+        }
+      },
+    };
+    var config2 = {
+      type: 'bar',
+      data: {
+          datasets: [{
+            data: {{ context.dup_graph2.num_rows | safe }},
+            backgroundColor: 'blue',
+            label: 'Duplicate rows',
+          }],
+          labels: {{ context.dup_graph2.labels | safe }}
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Duplicate rows counts'
+        }
+      },
+    };
+    var config3 = {
+      type: 'bar',
+      data: {
+          datasets: [{
+            data: {{ context.dup_graph3.num_cols | safe }},
+            backgroundColor: 'blue',
+            label: 'Duplicate rows',
+          }],
+          labels: {{ context.dup_graph3.labels | safe }}
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Duplicate rows counts'
+        }
+      },
+    };
 
     window.onload = function() {
       var ctx = document.getElementById('bar-chart').getContext('2d');
       window.myPie = new Chart(ctx, config);
     };
+    window.onload = function() {
+      var ctx = document.getElementById('bar-chart1').getContext('2d');
+      window.myPie = new Chart(ctx, config1);
+    };
+    window.onload = function() {
+      var ctx = document.getElementById('bar-chart2').getContext('2d');
+      window.myPie = new Chart(ctx, config2);
+    };
+    window.onload = function() {
+      var ctx = document.getElementById('bar-chart3').getContext('2d');
+      window.myPie = new Chart(ctx, config3);
+    };
 
   </script>
 
-{% endblock %}
+{% endblock 
