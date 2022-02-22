@@ -121,4 +121,10 @@ def plot_bar4(l: list):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def finish(request):
+    spath = "/Users/HP/projects/s-loader/grouping/static/"
+    temp_file=os.walk(spath)
+    
+    for root, directories, files in temp_file:
+        for file in files:
+            os.remove(spath+file)
     return redirect('/home')
