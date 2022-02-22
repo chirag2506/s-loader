@@ -113,6 +113,8 @@ def plot_bar(l: list):
     y = []
 
     for record in l:
+        if len(record['file_name'])>5:
+            record['file_name']=record['file_name'][:5]
         x.append(record['file_name'])
         y.append(record['num_dup'])
     return {'labels': x, 'num_dup': y}
@@ -122,6 +124,8 @@ def plot_bar1(l: list):
     y = []
 
     for record in l:
+        if len(record['file_name'])>5:
+            record['file_name']=record['file_name'][:5]
         x.append(record['file_name'])
         y.append(record['null_rows'])
     return {'labels': x, 'null_rows': y}
@@ -132,6 +136,8 @@ def plot_bar2(l: list):
     y = []
 
     for record in l:
+        if len(record['file_name'])>5:
+            record['file_name']=record['file_name'][:5]
         x.append(record['file_name'])
         y.append(record['num_rows'])
     return {'labels': x, 'num_rows': y}
@@ -142,6 +148,8 @@ def plot_bar3(l: list):
     y = []
 
     for record in l:
+        if len(record['file_name'])>5:
+            record['file_name']=record['file_name'][:5]
         x.append(record['file_name'])
         y.append(record['num_cols'])
     return {'labels': x, 'num_cols': y}
@@ -150,6 +158,6 @@ def plot_bar4(l: list):
     dict={}
     print(l)
     for record in l:
-        dict[record['file_name']]=record['null_cols']
+        dict[record['file_name']]={'value':record['null_cols'].tolist(),'ind':list(record['null_cols'].index)}
     print(dict)
     return dict

@@ -1,142 +1,286 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container" >
-    <canvas id="bar-chart" ></canvas>
+
+<style>
+  body {
+    padding: 40px;
+    margin: auto;
+    background: rgb(242 244 247);
+    font-family: system-ui;
+    box-sizing: border-box;
+
+    width: 100vw;
+    overflow: visible;
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 1rem;
+    color: rgb(152, 162, 179);
+    font-size: 14px;
+    background: rgb(252, 252, 253);
+    box-shadow: rgb(16 24 40 / 30%) 0px 0.5px 2px;
+    border-radius: 8px;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .card-header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0.2rem;
+  }
+
+  .card-footer .assigned {
+    display: flex;
+    gap: 0.2rem;
+  }
+
+  .card-tags {
+    display: flex;
+    width: 100%;
+    gap: 0.2rem;
+  }
+
+  .card-tags label {
+    padding: 6px 12px;
+    background: rgb(242, 244, 247);
+    color: rgb(71, 84, 103);
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    border-radius: 6px;
+    text-align: center;
+    margin-right: 8px;
+  }
+
+  .card-header h2 {
+    color: rgb(102, 112, 133);
+    font-weight: bold;
+    line-height: 18px;
+    font-size: 15px;
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .card:hover {
+    transform: scale(1.15);
+    transition: ease-in-out 0.3s;
+    z-index: 2;
+  }
+</style>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Duplicate row count</h2>
+        <div class="card-info"><span class="date">13 Mar, 2021</span><span class="dot"></span><span
+            class="author">Created by Atakan</span></div>
+      </div>
+      <div class="card-body">
+        <canvas id="bar-chart"></canvas>
+      </div>
+    </div>
   </div>
-  <div class="container" >
-    <canvas id="bar-chart1" ></canvas>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Null row count</h2>
+        <div class="card-info"><span class="date">13 Mar, 2021</span><span class="dot"></span><span
+            class="author">Created
+            by Atakan</span></div>
+      </div>
+      <div class="card-body">
+        <canvas id="bar-chart1"></canvas>
+      </div>
+
+    </div>
   </div>
-  <div class="container" >
-    <canvas id="bar-chart2" ></canvas>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Num of rows count</h2>
+      </div>
+      <div class="card-body">
+        <canvas id="bar-chart2"></canvas>
+      </div>
+
+    </div>
   </div>
-  <div class="container" >
-    <canvas id="bar-chart3" ></canvas>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Num of columns count</h2>
+        <div class="card-info"><span class="date">13 Mar, 2021</span><span class="dot"></span><span
+            class="author">Created
+            by Atakan</span></div>
+      </div>
+      <div class="card-body">
+        <canvas id="bar-chart3"></canvas>
+      </div>
+
+    </div>
   </div>
-  <div class="container" >
-    <canvas id="bar-chart4" ></canvas>
+</div>
+
+  <div class="row">
+    {% for i,j in context.dup_graph4.items%}
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header">
+            <h2>{{i}}</h2>
+            <div class="card-info"><span class="date">13 Mar, 2021</span><span class="dot"></span><span class="author">Created
+                by Atakan</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas id="{{forloop.counter}}"></canvas>
+          </div>
+
+        </div>
+      </div>
+
+    {%endfor%}
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-  <script>
-
-    var config = {
-        type: 'bar',
-        data: {
-            datasets: [{
-              data: {{ context.dup_graph.num_dup | safe }},
-              backgroundColor: 'blue',
-              label: 'Duplicate rows',
-            }],
-            labels: {{ context.dup_graph.labels | safe }}
-        },
-      options: {
-        responsive: true,
-        title: {
-          display: true,
-          text: 'Duplicate rows counts'
-        }
-      },
-    };
-    var config1 = {
-      type: 'bar',
-      data: {
-          datasets: [{
-            data: {{ context.dup_graph1.null_rows | safe }},
-            backgroundColor: 'blue',
-            label: 'Null rows',
-          }],
-          labels: {{ context.dup_graph1.labels | safe }}
-      },
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+  var config = {
+    type: 'bar',
+    data: {
+      datasets: [{
+        data: {{context.dup_graph.num_dup | safe}},
+        backgroundColor: 'blue',
+        label: 'Duplicate rows',
+      }],
+      labels: {{context.dup_graph.labels | safe}}
+    },
     options: {
       responsive: true,
       title: {
         display: true,
-        text: 'Null rows counts'
       }
     },
   };
-    var config2 = {
-      type: 'bar',
-      data: {
-          datasets: [{
-            data: {{ context.dup_graph2.num_rows | safe }},
-            backgroundColor: 'red',
-            label: 'Num of rows',
-          }],
-          labels: {{ context.dup_graph2.labels | safe }}
-      },
-      options: {
-        responsive: true,
-        title: {
-          display: true,
-          text: 'Num of rows counts'
-        }
-      },
-    };
-    var config3 = {
-      type: 'bar',
-      data: {
-          datasets: [{
-            data: {{ context.dup_graph3.num_cols | safe }},
-            backgroundColor: 'green',
-            label: 'Num of cols',
-          }],
-          labels: {{ context.dup_graph3.labels | safe }}
-      },
-      options: {
-        responsive: true,
-        title: {
-          display: true,
-          text: 'Num of cols counts'
-        }
-      },
-    };
-    const conf=[];
-    var t=0;
-    {% for i,j in context.dup_graph4.items%}
+  var config1 = {
+    type: 'bar',
+    data: {
+      datasets: [{
+        data: {{context.dup_graph1.null_rows | safe }},
+        backgroundColor: 'blue',
+        label: 'Null rows',
+      }],
+      labels: {{context.dup_graph1.labels | safe}}
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+      }
+    },
+  };
+  var config2 = {
+    type: 'bar',
+    data: {
+      datasets: [{
+        data: {{context.dup_graph2.num_rows | safe}},
+        backgroundColor: 'red',
+        label: 'Num of rows',
+      }],
+      labels: {{context.dup_graph2.labels | safe}}
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+      }
+    },
+  };
+  var config3 = {
+    type: 'bar',
+    data: {
+      datasets: [{
+        data: {{ context.dup_graph3.num_cols | safe}},
+        backgroundColor: 'green',
+        label: 'Num of cols',
+      }],
+      labels: {{context.dup_graph3.labels | safe}}
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+      }
+    },
+  };
+  var conf = []; 
+  {%for i, j in context.dup_graph4.items %}
 
-      conf[t] = {
-        type: 'pie',
-        data: {
-            datasets: [{
-              data: {{ context.dup_graph4.i | safe }},
-              backgroundColor: [
-              '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3','#A2A2A2', '#C5C5C5', '#D1D1D1'
-            ],
-              label: 'Null cols',
-            }],
-            labels: {{ context.dup_graph4.j.index | safe }}
-        },
-        options: {
-          responsive: true,
-          title: {
-            display: true,
-            text: 'Null cols counts'
-          }
-        },
-      };
-      t=t+1;
-    {% endfor %}
-    window.onload = function() {
-      var ctx = document.getElementById('bar-chart').getContext('2d');
-      window.myPie = new Chart(ctx, config);
-      var ctx1 = document.getElementById('bar-chart1').getContext('2d');
-      window.myPie1 = new Chart(ctx1, config1);
-      var ctx2 = document.getElementById('bar-chart2').getContext('2d');
-      window.myPie2 = new Chart(ctx2, config2);
-      var ctx3 = document.getElementById('bar-chart3').getContext('2d');
-      window.myPie3 = new Chart(ctx3, config3);
-      var g=0;
-      {% for i in dup_graph4 %}
-      console.log(g)
-        var ctx4 = document.getElementById('bar-chart4').getContext('2d');
-        window.myPie4 = new Chart(ctx4, conf[g]);
-        g=g+1;
-      {%endfor%}
-    };
-
-
-  </script>
+  conf[{{forloop.counter}}] = {
+    type: 'pie',
+    data: {
+      datasets: [{
+        data: {{j.value | safe}},
+        backgroundColor: [
+          'green', 'yellow', 'lightblue', 'pink', 'lightgreen', 'purple', 'orange', 'aqua'
+        ],
+        label: 'Null cols',
+      }],
+      labels: {{j.ind | safe}}
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+      }
+    },
+  }; 
+  {%endfor %}
+  window.onload = function () {
+    var ctx = document.getElementById('bar-chart').getContext('2d');
+    window.myPie = new Chart(ctx, config);
+    var ctx1 = document.getElementById('bar-chart1').getContext('2d');
+    window.myPie1 = new Chart(ctx1, config1);
+    var ctx2 = document.getElementById('bar-chart2').getContext('2d');
+    window.myPie2 = new Chart(ctx2, config2);
+    var ctx3 = document.getElementById('bar-chart3').getContext('2d');
+    window.myPie3 = new Chart(ctx3, config3);
+    var ctx4 = [];
+    {% for i,j in context.dup_graph4.items %}
+      ctx4[{{ forloop.counter}}] = document.getElementById({{ forloop.counter}}).getContext('2d');
+      window.myPie4 = new Chart(ctx4[{{forloop.counter}}], conf[{{forloop.counter}}]);
+    {%endfor %}
+  };
+</script>
 
 {% endblock %}
