@@ -92,26 +92,32 @@
         }
       },
     };
-    var config4 = {
-      type: 'pie',
-      data: {
-          datasets: [{
-            data: {{ context.dup_graph4.null_cols | safe }},
-            backgroundColor: [
-            '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3','#A2A2A2', '#C5C5C5', '#D1D1D1'
-          ],
-            label: 'Null cols',
-          }],
-          labels: {{ context.dup_graph4.pie_label | safe }}
-      },
-      options: {
-        responsive: true,
-        title: {
-          display: true,
-          text: 'Null cols counts'
-        }
-      },
-    };
+    const conf=[];
+    var t=0;
+    {% for i,j in context.dup_graph4.items%}
+
+      conf[t] = {
+        type: 'pie',
+        data: {
+            datasets: [{
+              data: {{ context.dup_graph4.i | safe }},
+              backgroundColor: [
+              '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3','#A2A2A2', '#C5C5C5', '#D1D1D1'
+            ],
+              label: 'Null cols',
+            }],
+            labels: {{ context.dup_graph4.j.index | safe }}
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: 'Null cols counts'
+          }
+        },
+      };
+      t=t+1;
+    {% endfor %}
     window.onload = function() {
       var ctx = document.getElementById('bar-chart').getContext('2d');
       window.myPie = new Chart(ctx, config);
@@ -121,8 +127,13 @@
       window.myPie2 = new Chart(ctx2, config2);
       var ctx3 = document.getElementById('bar-chart3').getContext('2d');
       window.myPie3 = new Chart(ctx3, config3);
-      var ctx4 = document.getElementById('bar-chart4').getContext('2d');
-      window.myPie4 = new Chart(ctx4, config4);
+      var g=0;
+      {% for i in dup_graph4 %}
+      console.log(g)
+        var ctx4 = document.getElementById('bar-chart4').getContext('2d');
+        window.myPie4 = new Chart(ctx4, conf[g]);
+        g=g+1;
+      {%endfor%}
     };
 
 

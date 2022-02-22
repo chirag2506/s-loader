@@ -13,6 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
+import json
 # Create your views here.
 
 
@@ -68,7 +69,7 @@ def dashboard(request):
             
             null_cols = df.isna().sum()
             try:
-                items["Counting null column"].append({
+                items["Counting null columns"].append({
                     'file_name': file,
                     'null_cols': null_cols
                 })
@@ -103,7 +104,7 @@ def dashboard(request):
     context["dup_graph2"] = plot_bar2(items["Number of rows"])
     context["dup_graph3"] = plot_bar3(items["Number of Columns"])
     context["dup_graph4"] = plot_bar4(items["Counting null columns"])
-    print(context)
+    
     return render(request, "charts.html", {'context': context})
 
 
@@ -146,8 +147,9 @@ def plot_bar3(l: list):
     return {'labels': x, 'num_cols': y}
 
 def plot_bar4(l: list):
-    x = []
-    y = []
-    z = []
+    dict={}
+    print(l)
     for record in l:
-        return {'labels': record['file_name'], 'null_cols': record['null_cols'].tolist(),'pie_label':list(record['null_cols'].index)}
+        dict[record['file_name']]=record['null_cols']
+    print(dict)
+    return dict
