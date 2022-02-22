@@ -56,7 +56,7 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
-        s_path = "/Users/HP/projects/s-loader/grouping/static/"
+        s_path = "grouping/static"
         path = os.walk(s_path)
         files_path=[]
         file_name=[]

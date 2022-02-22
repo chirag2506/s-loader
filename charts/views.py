@@ -4,7 +4,7 @@ import pandas as pd
 from django.views.decorators.cache import cache_control
 
 def dashboard(request):
-    spath = "/Users/HP/projects/s-loader/grouping/static/"
+    spath = "grouping/static/"
     temp_file=os.walk(spath)
     items={}
     operations = ["Counting duplicate rows", "Counting null rows", "Number of rows", "Number of Columns"]
