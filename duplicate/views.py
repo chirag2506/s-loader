@@ -5,6 +5,7 @@ from .models import FilesUpload
 import pandas as pd
 from .forms import uploadform
 import os
+from django.contrib import messages
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
@@ -31,8 +32,10 @@ def home(request):
                 'rows':duplicates.values[:,:],
             })
     print('duplicates',num_duplicates)
+    messages.success(request, "Grouping completed!", extra_tags="uploaded")
     return render(request, "duplicate.html", {'context': context})
 
 def upload(request):
+    
     return render(request, "upload.html")
     

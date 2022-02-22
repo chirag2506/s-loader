@@ -42,11 +42,11 @@ def login_view(request):
         print(username, password)
         if not username:
             raise ValueError('Please enter user name')
-        data = User.objects.raw('select * from home_user where email = %s and password = %s', [username, password])
+        data = User.objects.raw('select id,name,email,password from home_user where email = %s and password = %s', [username, password])
         if(data):
-            print(data)
             print("Login successfull")
-            messages.success(request, msg_d["login_success"], extra_tags="invalid")
+            mes='Welcome back, ' + str(data[0].name.capitalize())
+            messages.success(request, mes, extra_tags="invalid")
             return redirect('/home')
         else:
             print("Enter valide data")

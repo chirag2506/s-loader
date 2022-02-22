@@ -102,8 +102,7 @@
     <div class="card">
       <div class="card-header">
         <h2>Duplicate row count</h2>
-        <div class="card-info"><span class="date">13 Mar, 2021</span><span class="dot"></span><span
-            class="author">Created by Atakan</span></div>
+        
       </div>
       <div class="card-body">
         <canvas id="bar-chart"></canvas>
@@ -114,9 +113,7 @@
     <div class="card">
       <div class="card-header">
         <h2>Null row count</h2>
-        <div class="card-info"><span class="date">13 Mar, 2021</span><span class="dot"></span><span
-            class="author">Created
-            by Atakan</span></div>
+        
       </div>
       <div class="card-body">
         <canvas id="bar-chart1"></canvas>
@@ -141,9 +138,7 @@
     <div class="card">
       <div class="card-header">
         <h2>Num of columns count</h2>
-        <div class="card-info"><span class="date">13 Mar, 2021</span><span class="dot"></span><span
-            class="author">Created
-            by Atakan</span></div>
+        
       </div>
       <div class="card-body">
         <canvas id="bar-chart3"></canvas>
@@ -159,9 +154,6 @@
         <div class="card">
           <div class="card-header">
             <h2>{{i}}</h2>
-            <div class="card-info"><span class="date">13 Mar, 2021</span><span class="dot"></span><span class="author">Created
-                by Atakan</span>
-            </div>
           </div>
           <div class="card-body">
             <canvas id="{{forloop.counter}}"></canvas>
@@ -172,6 +164,10 @@
 
     {%endfor%}
   </div>
+  <div style="margin-top:50px; text-align:center;">
+  <a style="margin:10px;" href="/duplicate/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Check Duplicates</a>
+  <a style="margin:10px;" href="finish" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Complete Review</a>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script>
