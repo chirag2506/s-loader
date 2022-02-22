@@ -173,7 +173,7 @@
   <section id="container" class="">
     <header class="header dark-bg">
       <!--logo start-->
-      <a href="{% url 'dashboard' %}" class="logo">MY<span class="lite">DASHBOARD</span></a>
+      <a href="{% url 'home' %}" class="logo"><< We are<span class="lite"> TRUSTWORTHY</span></a>
       <!--logo end-->
 
       <div class="top-nav notification-row">
@@ -188,19 +188,20 @@
 
     <!--main content start-->
     <section id="main-content">
+
       <section class="wrapper">
         <!--overview start-->
 
-
+        <center><h3>A fun way to show how many users have trusted us and uploaded their data </h3></center><br>
         <div class="row">
 
           <!--/.col-->
 
-          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
             <div class="info-box brown-bg">
               <i class="fas fa-chart-line"></i>
               <div class="count">{{ snapWeek }}</div><br>
-              <div class="title">This Week</div>
+              <div class="title">Uploads in this Week</div>
             </div>
             <!--/.info-box-->
           </div>
@@ -210,7 +211,7 @@
             <div class="info-box dark-bg">
               <i class="far fa-chart-bar"></i>
               <div class="count">{{ snapMonth }}</div><br>
-              <div class="title">This Month</div>
+              <div class="title">Uploads in this Month</div>
             </div>
             <!--/.info-box-->
           </div>
@@ -220,7 +221,7 @@
             <div class="info-box green-bg">
               <i class="fas fa-chart-area"></i>
               <div class="count">{{ snapYear }}</div><br>
-              <div class="title">This Year</div>
+              <div class="title">Uploads in this Year</div>
             </div>
             <!--/.info-box-->
           </div>

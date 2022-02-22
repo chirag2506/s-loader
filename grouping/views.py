@@ -14,12 +14,21 @@ import random
 from django.contrib import messages
 from dotenv import load_dotenv, find_dotenv
 from datetime import datetime
+from charts.models import StoreData
+from home.models import User
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+# from django.contrib.auth.models import User
+# from sloader.middleware import get_current_user
+from charts import trial
+from datetime import date
 
 load_dotenv(find_dotenv())
 BASE_DIR = Path(__file__).resolve().parent.parent
 def selcol(request):
     return render(request, 'multiple.html')
 
+# @login_required
 def select(request):
     if request.method=='POST':
         user=uploadform(request.POST,request.FILES)
@@ -32,8 +41,9 @@ def select(request):
             messages.success(request, "Please upload a file" )
             return redirect('/home')
         for i in files:
+            # trial.trial1()
             if i.name[-4:]!='xlsx':
-                messages.success(request, "Please upload files in xlsx format" )
+                messages.success(request, "Please upload files of xlsx format only" )
                 return redirect('/home')
 
         if user.is_valid():
@@ -43,15 +53,23 @@ def select(request):
                 cols=get_fields(t)
                 i+=1
                 context[f.name]=cols
-            con={
-                'context':context
-            }
-            #print(con)
+                # s=StoreData(sno=1)
+                # s.save()
+                s=StoreData.objects.create()
+                # s.save()
+            con={'context':context}
+            # a=User.objects.get(email=get_current_user())
+            # a=HourRecord.objects.for_user(request.user)
+            # s=StoreData.objects.create(nof=1)
+            # print("again:",s)
+            # s.nof=s.nof+len(files)
+            # s.save()
             return render(request, "select_columns.html",con)
     else:
         user=uploadform()
     return render(request, "select_columns.html")
 
+# @login_required
 def column_pro(request):
     if request.method=='POST':
         fields=[]
@@ -60,7 +78,7 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
-        s_path = "C:\\Users\\chira\\Desktop\\OFFICIAL\\SEARCE\\Training\\s-loader\\grouping\\static\\"
+        s_path = "/Users/pradeep/Desktop/s-loader/grouping/static"
         path = os.walk(s_path)
         files_path=[]
         file_name=[]
@@ -68,18 +86,19 @@ def column_pro(request):
             for file in files:
                 file_name.append(file)
                 files_path.append(os.path.join(s_path,file))
-        print(files_path)
-        engine = create_engine("mysql://uhxnrfxmodhvgw5b:OhzGBZeJgPtZ0HegRVdp@bhqrn8jopnuksupl1mpf-mysql.services.clever-cloud.com:3306/bhqrn8jopnuksupl1mpf")
+
+                # s.save()
+        engine = create_engine("mysql://uop75gpdhrfucbjz:3yNXz2ZJuz4juPKmX0VE@bxfz1wvdi75ffylvf4wt-mysql.services.clever-cloud.com:3306/bxfz1wvdi75ffylvf4wt")
         x=0
         for i,j in zip(files_path,fields):
             df=pd.read_excel(i)
-            print(df)
+            # print(df)
             df = df[j[0]]
-            df['date']=datetime.today().strftime('%Y-%m-%d')
+            # df['date']=datetime.today().strftime('%Y-%m-%d')
             t=engine.table_names()
-            print(t)
+            # print(t)
             if file_name[x] not in t:
-                print(file_name[x])
+                # print(file_name[x])
                 df.to_sql(file_name[x], con=engine)
             else:
                 c=file_name[x]+str(random.randint(0,9))
@@ -87,6 +106,7 @@ def column_pro(request):
                     c+=str(random.randint(0,9))
                 df.to_sql(c, con=engine)
             os.remove(i)
+
 
             x+=1
         messages.success(request, "Grouping completed!" )

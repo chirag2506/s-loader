@@ -1,7 +1,7 @@
 from csv import excel
 from urllib import request
 from django.shortcuts import render, HttpResponse
-from .models import FilesUpload
+# from .models import FilesUpload
 import pandas as pd
 from .forms import uploadform
 import os
@@ -21,7 +21,7 @@ def home(request):
         for root, directories, files in temp_file:
             for file in files:
                 df=pd.read_excel(spath+file)
-                duplicates = df[df.duplicated()] 
+                duplicates = df[df.duplicated()]
                 num_duplicates.append(duplicates.shape[0])
                 columns.append(list(duplicates.columns))
                 rows.append(duplicates.values[:,:])
@@ -32,7 +32,7 @@ def home(request):
                     'rows':duplicates.values[:,:],
                 })
         print('duplicates',num_duplicates)
-        
+
         return render(request, "index1.html", {'context': context})
     else:
         return render(request, "index1.html")
@@ -59,4 +59,3 @@ def group(request):
 
     else:
         return render(request, "grouping.html")
-    

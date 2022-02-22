@@ -20,6 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("home.urls")),
     path('duplicate/', include(("duplicate.urls", 'duplicate'), namespace="duplicate")),
-    path('charts/', include('charts.urls')),
+    path('charts/', include("charts.urls")),
     path('grouping/', include(("grouping.urls", 'grouping'), namespace="grouping"))
 ]

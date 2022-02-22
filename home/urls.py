@@ -18,9 +18,9 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path("", views.login),
+    path("", views.login, name='login'),
     path("login_com", views.login_view),
-    path("home",views.home),
+    path("home",views.home, name='home'),
     path("signup", views.signup),
     path("upload", views.uploadFiles)
 ]
