@@ -5,6 +5,5 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.home,name='dupli_index'),
-    path('upload/', views.upload,name='upload'),
-    path('grouping/', views.group)
+    path('upload/', views.upload,name='upload')
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -1,0 +1,322 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+  body {
+    padding: 40px;
+    margin: auto;
+    background: rgb(242 244 247);
+    font-family: system-ui;
+    box-sizing: border-box;
+
+    width: 100vw;
+    overflow: visible;
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 1rem;
+    color: rgb(152, 162, 179);
+    font-size: 14px;
+    background: rgb(252, 252, 253);
+    box-shadow: rgb(16 24 40 / 30%) 0px 0.5px 2px;
+    border-radius: 8px;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .card-header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0.2rem;
+  }
+
+  .card-footer .assigned {
+    display: flex;
+    gap: 0.2rem;
+  }
+
+  .card-tags {
+    display: flex;
+    width: 100%;
+    gap: 0.2rem;
+  }
+
+  .card-tags label {
+    padding: 6px 12px;
+    background: rgb(242, 244, 247);
+    color: rgb(71, 84, 103);
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    border-radius: 6px;
+    text-align: center;
+    margin-right: 8px;
+  }
+
+  .card-header h2 {
+    color: rgb(102, 112, 133);
+    font-weight: bold;
+    line-height: 18px;
+    font-size: 15px;
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .card:hover {
+    transform: scale(1.15);
+    transition: ease-in-out 0.3s;
+    z-index: 2;
+  }
+</style>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Duplicate row count</h2>
+        
+      </div>
+      <div class="card-body">
+        <canvas id="bar-chart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Null row count</h2>
+        
+      </div>
+      <div class="card-body">
+        <canvas id="bar-chart1"></canvas>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Num of rows count</h2>
+      </div>
+      <div class="card-body">
+        <canvas id="bar-chart2"></canvas>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h2>Num of columns count</h2>
+        
+      </div>
+      <div class="card-body">
+        <canvas id="bar-chart3"></canvas>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <div class="row">
+    {% for i,j in context.dup_graph4.items%}
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header">
+            <h2>{{i}}</h2>
+          </div>
+          <div class="card-body">
+            <canvas id="{{forloop.counter}}"></canvas>
+          </div>
+
+        </div>
+      </div>
+
+    {%endfor%}
+  </div>
+  <div style="margin-top:50px; text-align:center;">
+  <a style="margin:10px;" href="/duplicate/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Check Duplicates</a>
+  <a style="margin:10px;" href="finish" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Complete Review</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+  var config = {
+    type: 'bar',
+    data: {
+      datasets: [{
+        data: {{context.dup_graph.num_dup | safe}},
+        backgroundColor: 'blue',
+        label: 'Duplicate rows',
+      }],
+      labels: {{context.dup_graph.labels | safe}}
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+      },
+      scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                // OR //
+                beginAtZero: true   // minimum value will be 0.
+            }
+        }]
+    }
+    },
+  };
+  var config1 = {
+    type: 'bar',
+    data: {
+      datasets: [{
+        data: {{context.dup_graph1.null_rows | safe }},
+        backgroundColor: 'blue',
+        label: 'Null rows',
+      }],
+      labels: {{context.dup_graph1.labels | safe}}
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+      },
+      scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                // OR //
+                beginAtZero: true   // minimum value will be 0.
+            }
+        }]
+    }
+    },
+  };
+  var config2 = {
+    type: 'bar',
+    data: {
+      datasets: [{
+        data: {{context.dup_graph2.num_rows | safe}},
+        backgroundColor: 'red',
+        label: 'Num of rows',
+      }],
+      labels: {{context.dup_graph2.labels | safe}}
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+      },
+      scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                // OR //
+                beginAtZero: true   // minimum value will be 0.
+            }
+        }]
+    }
+    },
+  };
+  var config3 = {
+    type: 'bar',
+    data: {
+      datasets: [{
+        data: {{ context.dup_graph3.num_cols | safe}},
+        backgroundColor: 'green',
+        label: 'Num of cols',
+      }],
+      labels: {{context.dup_graph3.labels | safe}}
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+      },
+      scales: {
+        yAxes: [{
+            display: true,
+            ticks: {
+                suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                // OR //
+                beginAtZero: true   // minimum value will be 0.
+            }
+        }]
+    }
+    },
+  };
+  var conf = []; 
+  {%for i, j in context.dup_graph4.items %}
+
+  conf[{{forloop.counter}}] = {
+    type: 'pie',
+    data: {
+      datasets: [{
+        data: {{j.value | safe}},
+        backgroundColor: [
+          'green', 'yellow', 'lightblue', 'pink', 'lightgreen', 'purple', 'orange', 'aqua'
+        ],
+        label: 'Null cols',
+      }],
+      labels: {{j.ind | safe}}
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+      }
+    },
+  }; 
+  {%endfor %}
+  window.onload = function () {
+    var ctx = document.getElementById('bar-chart').getContext('2d');
+    window.myPie = new Chart(ctx, config);
+    var ctx1 = document.getElementById('bar-chart1').getContext('2d');
+    window.myPie1 = new Chart(ctx1, config1);
+    var ctx2 = document.getElementById('bar-chart2').getContext('2d');
+    window.myPie2 = new Chart(ctx2, config2);
+    var ctx3 = document.getElementById('bar-chart3').getContext('2d');
+    window.myPie3 = new Chart(ctx3, config3);
+    var ctx4 = [];
+    {% for i,j in context.dup_graph4.items %}
+      ctx4[{{ forloop.counter}}] = document.getElementById({{ forloop.counter}}).getContext('2d');
+      window.myPie4 = new Chart(ctx4[{{forloop.counter}}], conf[{{forloop.counter}}]);
+    {%endfor %}
+  };
+</script>
+
+{% endblock %}

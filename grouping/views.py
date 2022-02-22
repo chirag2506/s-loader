@@ -29,7 +29,7 @@ def select(request):
             messages.success(request, "Please upload 5 files at max" )
             return redirect('/home')
         if len(files)==0:
-            messages.success(request, "Please upload a file" )
+            messages.success(request, "Please select a file" )
             return redirect('/home')
         for i in files:
             if i.name[-4:]!='xlsx':
@@ -60,7 +60,7 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
-        s_path = "C:\\Users\\chira\\Desktop\\OFFICIAL\\SEARCE\\Training\\s-loader\\grouping\\static\\"
+        s_path = "/Users/HP/projects/s-loader/grouping/static/"
         path = os.walk(s_path)
         files_path=[]
         file_name=[]
@@ -69,15 +69,14 @@ def column_pro(request):
                 file_name.append(file)
                 files_path.append(os.path.join(s_path,file))
         print(files_path)
-        engine = create_engine("mysql://uhxnrfxmodhvgw5b:OhzGBZeJgPtZ0HegRVdp@bhqrn8jopnuksupl1mpf-mysql.services.clever-cloud.com:3306/bhqrn8jopnuksupl1mpf")
+        engine = create_engine("mysql://uaf9zenjb3zwdszd:MOTaVWWxUIT6MOPCXNU0@bldot2uujx3isi3clafh-mysql.services.clever-cloud.com:3306/bldot2uujx3isi3clafh")
         x=0
         for i,j in zip(files_path,fields):
             df=pd.read_excel(i)
-            print(df)
             df = df[j[0]]
+            df.to_excel(i,index=False)
             df['date']=datetime.today().strftime('%Y-%m-%d')
             t=engine.table_names()
-            print(t)
             if file_name[x] not in t:
                 print(file_name[x])
                 df.to_sql(file_name[x], con=engine)
@@ -89,9 +88,8 @@ def column_pro(request):
             os.remove(i)
 
             x+=1
-        messages.success(request, "Grouping completed!" )
-
-        return redirect('/home')
+        messages.success(request, "Grouping completed!", extra_tags="uploaded")
+        return redirect('/duplicate/')
 
     else:
         return render(request, "home.html")
