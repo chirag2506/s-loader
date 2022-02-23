@@ -3,6 +3,8 @@ from .models import User
 from django.contrib import messages
 from sloader.constants import msg_d
 
+from django.views.decorators.cache import cache_control
+
 # Create your views here.
 
 def login(request):
@@ -32,6 +34,7 @@ def signup(request):
             messages.error(request, msg_d['not_match_password'])
             return render(request, "login.html")
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def home(request):
     return render(request,'home.html')
 
