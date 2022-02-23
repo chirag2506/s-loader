@@ -10,8 +10,8 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 def home(request):
-    spath = "/Users/HP/projects/s-loader/grouping/static/"
-    print("path =", spath)
+    spath = os.environ['SYS_PATH']
+    # print("path =", spath)
     temp_file=os.walk(spath)
     columns=[]
     rows=[]
@@ -19,7 +19,7 @@ def home(request):
     context=[]
     for root, directories, files in temp_file:
         for file in files:
-            print("file path: ", spath+file)
+            # print("file path: ", spath+file)
             df=pd.read_excel(spath+file)
             duplicates = df[df.duplicated()] 
             num_duplicates.append(duplicates.shape[0])
@@ -31,7 +31,7 @@ def home(request):
                 'columns':list(duplicates.columns),
                 'rows':duplicates.values[:,:],
             })
-    print('duplicates',num_duplicates)
+    # print('duplicates',num_duplicates)
     messages.success(request, "Grouping completed!", extra_tags="uploaded")
     return render(request, "duplicate.html", {'context': context})
 

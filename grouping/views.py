@@ -56,7 +56,7 @@ def column_pro(request):
             fields.append([request.POST.getlist(i),i[:-7]])
         fields=fields[1:-1]
         fields=sorted(fields,key=lambda x: (x[1]))
-        s_path = "grouping/static"
+        s_path = os.environ['SYS_PATH']
         path = os.walk(s_path)
         files_path=[]
         file_name=[]
@@ -64,8 +64,9 @@ def column_pro(request):
             for file in files:
                 file_name.append(file)
                 files_path.append(os.path.join(s_path,file))
-        print(files_path)
-        engine = create_engine("mysql://uaf9zenjb3zwdszd:MOTaVWWxUIT6MOPCXNU0@bldot2uujx3isi3clafh-mysql.services.clever-cloud.com:3306/bldot2uujx3isi3clafh")
+        # print(files_path)
+        connectionUri = os.environ['DB_CONNECTION_URI']
+        engine = create_engine(connectionUri)
         x=0
         for i,j in zip(files_path,fields):
             df=pd.read_excel(i)

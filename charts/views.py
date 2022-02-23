@@ -4,13 +4,12 @@ import pandas as pd
 from django.views.decorators.cache import cache_control
 
 def dashboard(request):
-    spath = "grouping/static/"
+    spath = os.environ['SYS_PATH']
     temp_file=os.walk(spath)
     items={}
     operations = ["Counting duplicate rows", "Counting null rows", "Number of rows", "Number of Columns"]
     for root, directories, files in temp_file:
         for file in files:
-            print("file path: ", spath+file)
             df = pd.read_excel(spath+file)
             duplicates = df[df.duplicated()] 
             num_duplicates = duplicates.shape[0]
@@ -62,7 +61,7 @@ def dashboard(request):
     context["dup_graph1"] = plot_bar1(items["Counting null rows"])
     context["dup_graph2"] = plot_bar2(items["Number of rows"])
     context["dup_graph3"] = plot_bar3(items["Number of Columns"])
-    context["dup_graph4"] = plot_bar4(items["Counting null columns"])
+    context["dup_graph4"] = plotPie(items["Counting null columns"])
     
     return render(request, "charts.html", {'context': context})
 
@@ -113,7 +112,7 @@ def plot_bar3(l: list):
         y.append(record['num_cols'])
     return {'labels': x, 'num_cols': y}
 
-def plot_bar4(l: list):
+def plotPie(l: list):
     dict={}
     for record in l:
         dict[record['file_name']]={'value':record['null_cols'].tolist(),'ind':list(record['null_cols'].index)}
@@ -121,7 +120,7 @@ def plot_bar4(l: list):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def finish(request):
-    spath = "/Users/HP/projects/s-loader/grouping/static/"
+    spath = os.environ['SYS_PATH']
     temp_file=os.walk(spath)
     
     for root, directories, files in temp_file:
