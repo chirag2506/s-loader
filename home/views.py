@@ -25,6 +25,7 @@ def signup(request):
         if(password == conf_password):
             user = User(name= username, email = email, password = password)
             user.save()
+            request.session['username']=email
             print("success register")
             messages.success(request, msg_d['signup_success'])
             return redirect('/home')
@@ -47,6 +48,7 @@ def login_view(request):
             raise ValueError('Please enter user name')
         data = User.objects.raw('select id,name,email,password from home_user where email = %s and password = %s', [username, password])
         if(data):
+            request.session['username']=username
             print("Login successfull")
             mes='Welcome back, ' + str(data[0].name.capitalize())
             messages.success(request, mes, extra_tags="invalid")

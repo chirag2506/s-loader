@@ -11,6 +11,7 @@ import random
 from django.contrib import messages
 from dotenv import load_dotenv, find_dotenv
 from datetime import datetime
+from charts.models import StoreData
 
 load_dotenv(find_dotenv())
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,7 +20,7 @@ def selcol(request):
 
 def select(request):
     if request.method=='POST':
-        user=uploadform(request.POST,request.FILES)
+        form=uploadform(request.POST,request.FILES)
         files = request.FILES.getlist('files')
         context={}
         if len(files)>5:
@@ -33,9 +34,11 @@ def select(request):
                 messages.success(request, "Please upload files in xlsx format" )
                 return redirect('/home')
 
-        if user.is_valid():
+        if form.is_valid():
             i=0
             for f in files:
+                StoreData.objects.create(naam=request.session.get('username'))
+                # t=handle_uploaded_file(f)
                 t=handle_uploaded_file(f)
                 cols=get_fields(t)
                 i+=1
@@ -45,7 +48,7 @@ def select(request):
             }
             return render(request, "select_columns.html",con)
     else:
-        user=uploadform()
+        form=uploadform()
     return render(request, "select_columns.html")
 
 def column_pro(request):

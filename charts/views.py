@@ -2,6 +2,9 @@ from django.shortcuts import render,redirect
 import os
 import pandas as pd
 from django.views.decorators.cache import cache_control
+from .models import StoreData
+from django.db.models.functions import TruncMonth, TruncYear, TruncWeek
+from django.db.models import Count
 
 def dashboard(request):
     spath = os.environ['SYS_PATH']
@@ -127,3 +130,20 @@ def finish(request):
         for file in files:
             os.remove(spath+file)
     return redirect('/home')
+
+def mydashboard(request):
+    context={}
+    dt = StoreData.objects.filter(naam=request.session.get('username')).order_by('-id')[:10]
+    if dt.exists():
+        weekly = StoreData.objects.filter(naam=request.session.get('username')).annotate(week=TruncWeek('date')).values('week').annotate(AmtW=Count('date')).values('week','AmtW')
+        snapWeek = round(weekly.latest('week')['AmtW'],0)
+
+        monthly = StoreData.objects.filter(naam=request.session.get('username')).annotate(month=TruncMonth('date')).values('month').annotate(AmtM=Count('date')).values('month','AmtM')
+        snapMonth = round(monthly.latest('month')['AmtM'],0)
+
+        yearly = StoreData.objects.filter(naam=request.session.get('username')).annotate(year=TruncYear('date')).values('year').annotate(AmtY=Count('date')).values('year','AmtY')
+        snapYear = round(yearly.latest('year')['AmtY'],0)
+        context = {'weekly': weekly ,'monthly': monthly, 'yearly': yearly, 'snapWeek': snapWeek, 'snapMonth':snapMonth, 'snapYear':snapYear}
+    else:
+        context = {'weekly': (0,0) ,'monthly': (0,0), 'yearly': (0,0), 'snapWeek': 0, 'snapMonth':0, 'snapYear':0}
+    return render(request, "index.html", context)

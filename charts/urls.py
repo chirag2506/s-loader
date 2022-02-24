@@ -4,6 +4,6 @@ from . import views
 
 urlpatterns = [
     path('dashboard', views.dashboard, name='dashboard'),
-    path('finish', views.finish, name='finish')
-    # path('view_data', views.tableOfData, name='blog-tableOfData'),
+    path('finish', views.finish, name='finish'),
+    path('mydashboard', views.mydashboard, name='mydashboard'),
 ]
